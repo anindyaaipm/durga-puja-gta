@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Durga Puja 2025 Guide - GTA</title>
-    
+    <title>Durga Puja 2026 Guide - GTA</title>
+
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Font Awesome for icons -->
@@ -13,9 +13,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <!-- Google Fonts for festive typography -->
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
-    
+
     <style>
-        /* ===== FESTIVE DURGA PUJA THEME ===== */
         :root {
             --primary-red: #d32f2f;
             --gold: #ffd700;
@@ -23,21 +22,35 @@
             --light-red: #ffebee;
             --dark-red: #b71c1c;
             --text-dark: #2c3e50;
+            --shadow-soft: 0 8px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        html,
+        body {
+            max-width: 100%;
+            overflow-x: hidden;
         }
 
         body {
             font-family: 'Open Sans', sans-serif;
             background: linear-gradient(135deg, var(--light-red) 0%, var(--white) 100%);
             min-height: 100vh;
+            color: var(--text-dark);
+            padding-bottom: 5.5rem;
         }
 
-        /* ===== HEADER STYLING ===== */
+        :focus-visible {
+            outline: 3px solid var(--gold);
+            outline-offset: 2px;
+        }
+
+        /* ===== HEADER ===== */
         .header {
             background: linear-gradient(135deg, var(--primary-red) 0%, var(--dark-red) 100%);
             color: var(--white);
             padding: 2rem 0;
             text-align: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
         }
 
         .header h1 {
@@ -45,7 +58,7 @@
             font-size: 3rem;
             font-weight: 700;
             margin-bottom: 0.5rem;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
         }
 
         .header .subtitle {
@@ -53,7 +66,6 @@
             opacity: 0.9;
         }
 
-        /* ===== HEADER DECORATIONS ===== */
         .header-decoration {
             display: flex;
             flex-direction: column;
@@ -64,7 +76,7 @@
         .header-icon {
             font-size: 3rem;
             color: var(--gold);
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
             animation: pulse 2s infinite;
         }
 
@@ -81,13 +93,8 @@
             animation: twinkle 1.5s infinite;
         }
 
-        .dot:nth-child(2) {
-            animation-delay: 0.3s;
-        }
-
-        .dot:nth-child(3) {
-            animation-delay: 0.6s;
-        }
+        .dot:nth-child(2) { animation-delay: 0.3s; }
+        .dot:nth-child(3) { animation-delay: 0.6s; }
 
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
@@ -99,25 +106,25 @@
             50% { opacity: 1; transform: scale(1.2); }
         }
 
-        @media (max-width: 768px) {
-            .header-icon {
-                font-size: 2.5rem;
-            }
-        }
-
-        /* ===== INTRO SECTION ===== */
-        .intro-section {
+        /* ===== INTRO / SEARCH ===== */
+        .intro-section,
+        .search-section,
+        .puja-container,
+        .map-section-card {
             background: var(--white);
-            padding: 3rem 0;
-            margin: 2rem 0;
             border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            box-shadow: var(--shadow-soft);
         }
 
-        .intro-section h2 {
+        .intro-section {
+            padding: 3rem 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .intro-section h2,
+        .section-heading {
             color: var(--primary-red);
             font-family: 'Playfair Display', serif;
-            margin-bottom: 1.5rem;
         }
 
         .intro-credit {
@@ -126,404 +133,94 @@
             border-top: 1px solid var(--light-red);
         }
 
-        .intro-credit-link {
+        .intro-credit-link,
+        .footer-link,
+        .link-festive {
             color: #FF6B35;
             text-decoration: none;
             font-weight: 700;
-            font-size: 1.1em;
-            transition: all 0.3s ease;
         }
 
-        .intro-credit-link:hover {
+        .intro-credit-link:hover,
+        .footer-link:hover,
+        .link-festive:hover {
             color: var(--primary-red);
             text-decoration: underline;
-            transform: translateY(-1px);
         }
 
-        .intro-credit p {
-            font-weight: 600;
-        }
-
-        /* ===== SEARCH AND FILTER SECTION ===== */
         .search-section {
-            background: var(--white);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            padding: 1.5rem;
             margin-bottom: 2rem;
         }
 
-        .search-input {
+        .search-input,
+        .sort-select {
             border: 2px solid var(--light-red);
             border-radius: 25px;
             padding: 0.75rem 1.5rem;
-            font-size: 1.1rem;
         }
 
-        .search-input:focus {
+        .search-input:focus,
+        .sort-select:focus {
             border-color: var(--primary-red);
             box-shadow: 0 0 0 0.2rem rgba(211, 47, 47, 0.25);
         }
 
-        .search-info {
-            display: flex;
-            align-items: center;
-            height: 100%;
-            justify-content: center;
+        .btn-festive {
+            background-color: var(--primary-red);
+            border-color: var(--primary-red);
+            color: var(--white);
         }
 
-        /* ===== FOOTER STYLING ===== */
-        .footer {
-            background: var(--white);
-            color: var(--text-dark);
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 3rem;
-            border-top: 3px solid var(--primary-red);
+        .btn-festive:hover,
+        .btn-festive:focus {
+            background-color: var(--dark-red);
+            border-color: var(--dark-red);
+            color: var(--white);
         }
 
-        .footer h3 {
-            font-family: 'Playfair Display', serif;
-            margin-bottom: 0.5rem;
-            color: var(--primary-red);
-        }
-
-        .footer-link {
-            color: #FF6B35;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1em;
-            transition: all 0.3s ease;
-        }
-
-        .footer-link:hover {
-            color: var(--primary-red);
-            text-decoration: underline;
-            transform: translateY(-1px);
-        }
-
-        .acknowledgement {
+        .btn-nearby {
+            border-radius: 999px;
             font-weight: 600;
+            min-height: 44px;
         }
 
-        /* ===== FLOATING ITINERARY BUTTON ===== */
-        .floating-itinerary-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--primary-red);
-            color: var(--white);
-            border: none;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            cursor: pointer;
-            z-index: 1000;
-            transition: all 0.3s ease;
+        /* ===== FEATURED CAROUSEL ===== */
+        .carousel-track {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
+            gap: 1rem;
+            overflow-x: auto;
+            padding: 0.25rem 0.25rem 0.75rem;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            touch-action: pan-x;
         }
 
-        .floating-itinerary-btn:hover {
-            background: var(--dark-red);
-            transform: scale(1.1);
+        .carousel-track::-webkit-scrollbar { height: 6px; }
+        .carousel-track::-webkit-scrollbar-thumb {
+            background: rgba(211, 47, 47, 0.35);
+            border-radius: 999px;
         }
 
-        .itinerary-count {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: var(--gold);
-            color: var(--text-dark);
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: 700;
-        }
-
-        /* ===== ITINERARY SIDEBAR ===== */
-        .itinerary-sidebar {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 400px;
-            height: 100vh;
-            background: var(--white);
-            box-shadow: -5px 0 20px rgba(0,0,0,0.3);
-            z-index: 1001;
-            transition: right 0.3s ease;
-            overflow-y: auto;
-        }
-
-        .itinerary-sidebar.open {
-            right: 0;
-        }
-
-        .sidebar-header {
-            background: var(--primary-red);
-            color: var(--white);
-            padding: 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .sidebar-header h4 {
-            margin: 0;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .close-sidebar {
-            background: none;
-            border: none;
-            color: var(--white);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 50%;
-            transition: background 0.3s ease;
-        }
-
-        .close-sidebar:hover {
-            background: rgba(255,255,255,0.2);
-        }
-
-        .sidebar-content {
-            padding: 1.5rem;
-        }
-
-        .itinerary-list {
-            margin-bottom: 2rem;
-        }
-
-        .itinerary-item {
-            background: var(--light-red);
-            padding: 1rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--primary-red);
-        }
-
-        .itinerary-item h6 {
-            color: var(--primary-red);
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .itinerary-item p {
-            margin: 0;
-            font-size: 0.9rem;
-            color: var(--text-dark);
-        }
-
-        .sidebar-actions {
-            border-top: 1px solid var(--light-red);
-            padding-top: 1.5rem;
-        }
-
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .sidebar-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* ===== RESPONSIVE ITINERARY ===== */
-        @media (max-width: 768px) {
-            .itinerary-sidebar {
-                width: 100%;
-                right: -100%;
-            }
-            
-            .floating-itinerary-btn {
-                bottom: 20px;
-                right: 20px;
-                width: 50px;
-                height: 50px;
-                font-size: 1.2rem;
-            }
-        }
-
-        /* ===== FLOATING ITINERARY BUTTON ===== */
-        .floating-itinerary-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--primary-red);
-            color: var(--white);
-            border: none;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            cursor: pointer;
-            z-index: 1000;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-        }
-
-        .floating-itinerary-btn:hover {
-            background: var(--dark-red);
-            transform: scale(1.1);
-        }
-
-        .itinerary-count {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: var(--gold);
-            color: var(--text-dark);
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: 700;
-        }
-
-        /* ===== ITINERARY SIDEBAR ===== */
-        .itinerary-sidebar {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 400px;
-            height: 100vh;
-            background: var(--white);
-            box-shadow: -5px 0 20px rgba(0,0,0,0.3);
-            z-index: 1001;
-            transition: right 0.3s ease;
-            overflow-y: auto;
-        }
-
-        .itinerary-sidebar.open {
-            right: 0;
-        }
-
-        .sidebar-header {
-            background: var(--primary-red);
-            color: var(--white);
-            padding: 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .sidebar-header h4 {
-            margin: 0;
-            font-family: 'Playfair Display', serif;
-        }
-
-        .close-sidebar {
-            background: none;
-            border: none;
-            color: var(--white);
-            font-size: 1.5rem;
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 50%;
-            transition: background 0.3s ease;
-        }
-
-        .close-sidebar:hover {
-            background: rgba(255,255,255,0.2);
-        }
-
-        .sidebar-content {
-            padding: 1.5rem;
-        }
-
-        .itinerary-list {
-            margin-bottom: 2rem;
-        }
-
-        .itinerary-item {
-            background: var(--light-red);
-            padding: 1rem;
-            border-radius: 10px;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--primary-red);
-        }
-
-        .itinerary-item h6 {
-            color: var(--primary-red);
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .itinerary-item p {
-            margin: 0;
-            font-size: 0.9rem;
-            color: var(--text-dark);
-        }
-
-        .sidebar-actions {
-            border-top: 1px solid var(--light-red);
-            padding-top: 1.5rem;
-        }
-
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .sidebar-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* ===== RESPONSIVE ITINERARY ===== */
-        @media (max-width: 768px) {
-            .itinerary-sidebar {
-                width: 100%;
-                right: -100%;
-            }
-            
-            .floating-itinerary-btn {
-                bottom: 20px;
-                right: 20px;
-                width: 50px;
-                height: 50px;
-                font-size: 1.2rem;
-            }
-        }
-
-        /* ===== PUJA TABLE/CARDS STYLING ===== */
-        .puja-container {
-            background: var(--white);
+        .featured-card {
+            flex: 0 0 min(280px, 85vw);
+            scroll-snap-align: start;
             border-radius: 15px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+            border: 2px solid var(--light-red);
+            background: var(--white);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .featured-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        /* ===== DIRECTORY TABLE / CARDS ===== */
+        .puja-container {
             overflow: hidden;
+            margin-bottom: 2rem;
         }
 
         .puja-table {
@@ -536,11 +233,7 @@
             border: none;
             padding: 1rem;
             font-weight: 600;
-            text-align: center;
-        }
-
-        .puja-table th:first-child {
-            width: 120px;
+            white-space: nowrap;
         }
 
         .puja-table td {
@@ -549,54 +242,44 @@
             border-color: var(--light-red);
         }
 
-        .puja-table td:first-child {
-            text-align: center;
-        }
-
         .puja-table tbody tr:hover {
             background-color: var(--light-red);
-            transition: background-color 0.3s ease;
         }
 
-        /* ===== PUJA CARDS (MOBILE VIEW) ===== */
         .puja-card {
             background: var(--white);
             border: 2px solid var(--light-red);
             border-radius: 15px;
             margin-bottom: 1.5rem;
             padding: 1.5rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .puja-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         .puja-card .card-title {
             color: var(--primary-red);
             font-family: 'Playfair Display', serif;
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
         }
 
-        .puja-card .card-text {
-            color: var(--text-dark);
-            margin-bottom: 0.5rem;
+        .badge-closest {
+            display: inline-block;
+            background: linear-gradient(135deg, #fff3cd, var(--gold));
+            color: var(--dark-red);
+            font-weight: 700;
+            font-size: 0.68rem;
+            border-radius: 999px;
+            padding: 0.22rem 0.5rem;
+            letter-spacing: 0.02em;
+            vertical-align: middle;
         }
 
-        .puja-card .facebook-link {
-            color: #1877f2;
-            text-decoration: none;
-            font-weight: 600;
+        .empty-pill {
+            border: 1px dashed rgba(211, 47, 47, 0.35);
+            border-radius: 16px;
+            background: var(--light-red);
         }
 
-        .puja-card .facebook-link:hover {
-            text-decoration: underline;
-        }
-
-        /* ===== CHECKBOX STYLING ===== */
         .form-check-input:checked {
             background-color: var(--primary-red);
             border-color: var(--primary-red);
@@ -607,237 +290,22 @@
             box-shadow: 0 0 0 0.2rem rgba(211, 47, 47, 0.25);
         }
 
-        /* ===== ITINERARY SIDEBAR ===== */
-        .itinerary-sidebar {
-            position: fixed;
-            top: 0;
-            right: -400px;
-            width: 400px;
-            height: 100vh;
-            background: var(--white);
-            box-shadow: -5px 0 25px rgba(0,0,0,0.2);
-            transition: right 0.3s ease;
-            z-index: 1050;
-            overflow-y: auto;
-        }
-
-        .itinerary-sidebar.show {
-            right: 0;
-        }
-
-        .itinerary-header {
-            background: var(--primary-red);
-            color: var(--white);
-            padding: 1.5rem;
-            text-align: center;
-        }
-
-        .itinerary-content {
-            padding: 1.5rem;
-        }
-
-        .itinerary-item {
-            background: var(--light-red);
-            border-radius: 10px;
-            padding: 1rem;
-            margin-bottom: 1rem;
-            border-left: 4px solid var(--primary-red);
-        }
-
-        .itinerary-item h6 {
-            color: var(--primary-red);
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-        }
-
-        .itinerary-item p {
-            margin: 0;
-            font-size: 0.9rem;
-            color: var(--text-dark);
-        }
-
-        /* ===== FLOATING ITINERARY BUTTON ===== */
-        .floating-itinerary-btn {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--primary-red);
-            color: var(--white);
-            border: none;
-            border-radius: 50px;
-            padding: 15px 25px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            box-shadow: 0 8px 25px rgba(211, 47, 47, 0.3);
-            transition: all 0.3s ease;
-            z-index: 1040;
-        }
-
-        .floating-itinerary-btn:hover {
-            background: var(--dark-red);
-            transform: translateY(-3px);
-            box-shadow: 0 12px 35px rgba(211, 47, 47, 0.4);
-        }
-
-        .itinerary-count {
-            background: var(--gold);
-            color: var(--text-dark);
-            border-radius: 50%;
-            width: 25px;
-            height: 25px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.8rem;
-            font-weight: 700;
-            margin-left: 10px;
-        }
-
-        /* ===== SHARE BUTTONS ===== */
-        .share-buttons {
-            margin-top: 1.5rem;
-            text-align: center;
-        }
-
-        .share-btn {
-            margin: 0.5rem;
-            padding: 0.75rem 1.5rem;
-            border: none;
-            border-radius: 25px;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-block;
-            transition: all 0.3s ease;
-        }
-
-        .share-btn.whatsapp {
-            background: #25d366;
-            color: white;
-        }
-
-        .share-btn.facebook {
-            background: #1877f2;
-            color: white;
-        }
-
-        .share-btn.email {
-            background: var(--primary-red);
-            color: white;
-        }
-
-        .share-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        /* ===== FOOTER ===== */
-        .footer {
-            background: var(--primary-red);
-            color: var(--white);
-            text-align: center;
-            padding: 2rem 0;
-            margin-top: 3rem;
-        }
-
-        .footer h3 {
-            font-family: 'Playfair Display', serif;
-            margin-bottom: 0.5rem;
-        }
-
-        /* ===== OVERLAY FOR SIDEBAR ===== */
-        .sidebar-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            z-index: 1040;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .sidebar-overlay.show {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* ===== RESPONSIVE DESIGN ===== */
-        @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2rem;
-            }
-            
-            .itinerary-sidebar {
-                width: 100%;
-                right: -100%;
-            }
-            
-            .floating-itinerary-btn {
-                bottom: 20px;
-                right: 20px;
-                padding: 12px 20px;
-                font-size: 1rem;
-            }
-            
-            .puja-table {
-                display: none;
-            }
-            
-            .puja-cards {
-                display: block;
-            }
-        }
-
-        @media (min-width: 769px) {
-            .puja-cards {
-                display: none;
-            }
-        }
-
-        /* ===== UTILITY CLASSES ===== */
-        .text-festive {
-            color: var(--primary-red);
-        }
-
-        .bg-festive {
-            background-color: var(--light-red);
-        }
-
-        .btn-festive {
-            background-color: var(--primary-red);
-            border-color: var(--primary-red);
-            color: white;
-        }
-
-        .btn-festive:hover {
-            background-color: var(--dark-red);
-            border-color: var(--dark-red);
-        }
-
-        /* ===== INTERACTIVE MAP SECTION ===== */
+        /* ===== MAP ===== */
         .map-section {
-            background: var(--light-red);
-            padding: 3rem 0;
-            margin-top: 3rem;
+            padding: 0 0 2rem;
         }
 
-        .map-container {
-            background: var(--white);
-            border-radius: 15px;
-            padding: 1rem;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
-            overflow: hidden;
+        .map-section-card {
+            padding: 1.25rem;
         }
 
         .puja-map {
             height: 500px;
             width: 100%;
             border-radius: 10px;
+            z-index: 1;
         }
 
-        /* Custom map marker styles */
         .custom-marker {
             background: var(--primary-red);
             border: 3px solid var(--white);
@@ -850,19 +318,12 @@
             color: var(--white);
             font-weight: bold;
             font-size: 14px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
-        .custom-marker:hover {
-            background: var(--dark-red);
-            transform: scale(1.1);
-            transition: all 0.3s ease;
-        }
-
-        /* Map popup styling */
         .leaflet-popup-content-wrapper {
             border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
         }
 
         .leaflet-popup-content {
@@ -875,10 +336,6 @@
             font-weight: 600;
             margin-bottom: 0.5rem;
             font-size: 1.1rem;
-        }
-
-        .popup-details {
-            margin-bottom: 1rem;
         }
 
         .popup-details p {
@@ -902,10 +359,6 @@
             gap: 0.25rem;
         }
 
-        .popup-btn:hover {
-            text-decoration: none;
-        }
-
         .btn-directions {
             background: var(--primary-red);
             color: var(--white);
@@ -921,49 +374,200 @@
             color: var(--white);
         }
 
-        .btn-facebook:hover {
-            background: #166fe5;
-            color: var(--white);
-        }
-
         .btn-website {
             background: var(--gold);
             color: var(--text-dark);
         }
 
-        .btn-website:hover {
-            background: #e6b800;
-            color: var(--text-dark);
+        .map-note {
+            font-size: 0.85rem;
+            color: #6c757d;
         }
 
-        /* ===== RESPONSIVE MAP ===== */
+        /* ===== FLOATING PLAN + SIDEBAR ===== */
+        .floating-itinerary-btn {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            z-index: 1040;
+            border: none;
+            border-radius: 999px;
+            padding: 0.7rem 1.15rem;
+            background: var(--primary-red);
+            color: var(--white);
+            font-weight: 600;
+            box-shadow: 0 8px 25px rgba(211, 47, 47, 0.35);
+            min-height: 48px;
+        }
+
+        .floating-itinerary-btn:hover {
+            background: var(--dark-red);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .itinerary-count {
+            background: var(--gold);
+            color: var(--text-dark);
+            border-radius: 50%;
+            min-width: 25px;
+            height: 25px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-left: 8px;
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1045;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease, visibility 0.25s ease;
+        }
+
+        .sidebar-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .itinerary-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: min(400px, 94vw);
+            height: 100vh;
+            height: 100dvh;
+            background: var(--white);
+            box-shadow: -5px 0 25px rgba(0, 0, 0, 0.2);
+            z-index: 1050;
+            transition: right 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .itinerary-sidebar.open {
+            right: 0;
+        }
+
+        .sidebar-header {
+            background: var(--primary-red);
+            color: var(--white);
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex: 0 0 auto;
+        }
+
+        .sidebar-header h4 {
+            margin: 0;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .close-sidebar {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            min-width: 44px;
+            min-height: 44px;
+            border-radius: 50%;
+        }
+
+        .close-sidebar:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .sidebar-body {
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 auto;
+            min-height: 0;
+            padding: 1.25rem;
+        }
+
+        .itinerary-list {
+            flex: 1 1 auto;
+            overflow-y: auto;
+            min-height: 0;
+            margin-bottom: 1rem;
+        }
+
+        .itinerary-item {
+            background: var(--light-red);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 0.85rem;
+            border-left: 4px solid var(--primary-red);
+        }
+
+        .itinerary-item h6 {
+            color: var(--primary-red);
+            margin-bottom: 0.35rem;
+            font-weight: 600;
+        }
+
+        .sidebar-actions {
+            flex: 0 0 auto;
+            border-top: 1px solid var(--light-red);
+            padding-top: 1rem;
+            background: var(--white);
+        }
+
+        .share-btn {
+            border: none;
+            border-radius: 25px;
+            font-weight: 600;
+            min-height: 44px;
+        }
+
+        .share-btn.whatsapp { background: #25d366; color: white; }
+        .share-btn.email { background: var(--primary-red); color: white; }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: var(--white);
+            color: var(--text-dark);
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 2rem;
+            border-top: 3px solid var(--primary-red);
+        }
+
+        .footer h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-red);
+        }
+
+        .acknowledgement { font-weight: 600; }
+
         @media (max-width: 768px) {
-            .puja-map {
-                height: 400px;
-            }
-            
-            .map-section {
-                padding: 2rem 0;
-            }
-            
-            .popup-actions {
-                flex-direction: column;
-            }
-            
-            .popup-btn {
-                justify-content: center;
+            .header h1 { font-size: 2rem; }
+            .header-icon { font-size: 2.5rem; }
+            .puja-map { height: 320px; }
+            .popup-actions { flex-direction: column; }
+            .floating-itinerary-btn {
+                bottom: 0.85rem;
+                right: 0.85rem;
+                font-size: 0.95rem;
+                padding: 0.65rem 1rem;
             }
         }
     </style>
 </head>
 <body>
-    <!-- ===== HEADER SECTION ===== -->
     <header class="header">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-md-2 text-center d-none d-md-block">
                     <div class="header-decoration">
-                        <i class="fas fa-om header-icon"></i>
+                        <i class="fas fa-om header-icon" aria-hidden="true"></i>
                         <div class="decoration-dots">
                             <span class="dot"></span>
                             <span class="dot"></span>
@@ -972,12 +576,12 @@
                     </div>
                 </div>
                 <div class="col-md-8 text-center">
-                    <h1><i class="fas fa-om"></i> Durga Puja 2025 Guide</h1>
+                    <h1><i class="fas fa-om" aria-hidden="true"></i> Durga Puja 2026 Guide</h1>
                     <p class="subtitle">Discover and plan your Durga Puja celebrations across the Greater Toronto Area</p>
                 </div>
                 <div class="col-md-2 text-center d-none d-md-block">
                     <div class="header-decoration">
-                        <i class="fas fa-om header-icon"></i>
+                        <i class="fas fa-om header-icon" aria-hidden="true"></i>
                         <div class="decoration-dots">
                             <span class="dot"></span>
                             <span class="dot"></span>
@@ -989,155 +593,152 @@
         </div>
     </header>
 
-    <!-- ===== MAIN CONTENT ===== -->
-    <div class="container">
-        <!-- ===== INTRO SECTION ===== -->
+    <main class="container">
         <section class="intro-section">
-            <div class="container">
-                <h2 class="text-center">Welcome to Durga Puja 2025</h2>
-                <p class="lead text-center">
-                    Explore the vibrant Durga Puja celebrations happening across the Greater Toronto Area. 
-                    Find puja details, dates, locations, and create your personalized itinerary to make the most of this festive season.
+            <h2 class="text-center">Welcome to Durga Puja 2026</h2>
+            <p class="lead text-center mb-0">
+                Explore the vibrant Durga Puja celebrations happening across the Greater Toronto Area.
+                Find puja details, dates, locations, and create your personalized itinerary to make the most of this festive season.
+            </p>
+            <div class="intro-credit text-center">
+                <p class="mb-0">
+                    <small>
+                        Created with ❤️ by
+                        <a href="https://www.youtube.com/@NodesofTravel" target="_blank" rel="noopener noreferrer" class="intro-credit-link">
+                            <i class="fab fa-youtube" aria-hidden="true"></i> Nodes of Travel
+                        </a>
+                    </small>
                 </p>
-                <div class="intro-credit text-center">
-                    <p>
-                        <small>
-                            Created with ❤️ by 
-                            <a href="https://www.youtube.com/@NodesofTravel" target="_blank" class="intro-credit-link">
-                                <i class="fab fa-youtube"></i> Nodes of Travel
-                            </a>
-                        </small>
-                    </p>
-                </div>
             </div>
         </section>
 
-        <!-- ===== SEARCH SECTION ===== -->
         <section class="search-section">
-            <div class="row">
-                <div class="col-md-6">
+            <div class="row g-3 align-items-end">
+                <div class="col-12 col-lg-5">
+                    <label for="searchInput" class="form-label fw-semibold mb-1">Search</label>
                     <div class="input-group">
-                        <span class="input-group-text bg-festive text-white">
-                            <i class="fas fa-search"></i>
+                        <span class="input-group-text bg-festive" style="background: var(--light-red); border-radius: 25px 0 0 25px; border: 2px solid var(--light-red);">
+                            <i class="fas fa-search" aria-hidden="true"></i>
                         </span>
-                        <input type="text" class="form-control search-input" id="searchInput" 
-                               placeholder="Search by puja name, location, or date...">
+                        <input type="search" class="form-control search-input" id="searchInput"
+                               placeholder="Search by puja name, location, or date..." autocomplete="off">
                     </div>
                 </div>
-                <div class="col-md-3">
-                    <select class="form-select" id="sortSelect">
-                        <option value="name">Sort by Name</option>
-                        <option value="date">Sort by Date</option>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <label for="sortSelect" class="form-label fw-semibold mb-1">Sort pujas</label>
+                    <select class="form-select sort-select" id="sortSelect">
+                        <option value="name">Name (A–Z)</option>
+                        <option value="area">Location / area</option>
+                        <option value="date">Date</option>
+                        <option value="distance">Distance</option>
                     </select>
                 </div>
-                <div class="col-md-3">
-                    <div class="search-info">
-                        <small class="text-muted">
-                            <i class="fas fa-info-circle"></i> 
-                            Found <span id="resultCount">21</span> pujas
-                        </small>
-                    </div>
+                <div class="col-12 col-md-6 col-lg-3">
+                    <button type="button" class="btn btn-festive btn-nearby w-100" id="btnUseLocation">
+                        <i class="fas fa-location-crosshairs me-1" aria-hidden="true"></i> Find Nearby Puja
+                    </button>
                 </div>
+            </div>
+            <p class="small text-muted mt-3 mb-0">
+                <i class="fas fa-info-circle" aria-hidden="true"></i>
+                Found <span id="resultCount">21</span> pujas
+            </p>
+        </section>
+
+        <section class="mb-4" aria-labelledby="featuredHeading">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+                <h2 class="h4 section-heading mb-0" id="featuredHeading">Featured pujas</h2>
+                <span class="small text-muted">Swipe or scroll for more</span>
+            </div>
+            <div id="featuredCarousel" class="carousel-track" role="region" aria-label="Featured Durga Puja locations"></div>
+        </section>
+
+        <section class="map-section">
+            <div class="map-section-card">
+                <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center gap-3 mb-3">
+                    <div>
+                        <h2 class="h4 section-heading mb-1">
+                            <i class="fas fa-map-marked-alt" aria-hidden="true"></i>
+                            Interactive Puja Map
+                        </h2>
+                        <p class="small text-muted mb-0">
+                            Click on the markers to see puja details and get directions. Markers match your current search.
+                        </p>
+                    </div>
+                    <button type="button" class="btn btn-outline-danger btn-nearby" id="btnUseLocationMap">
+                        <i class="fas fa-location-crosshairs me-1" aria-hidden="true"></i> Find Nearby Puja
+                    </button>
+                </div>
+                <div class="map-container">
+                    <div id="pujaMap" class="puja-map" aria-label="Map of Durga Puja locations"></div>
+                </div>
+                <p id="geoMessage" class="map-note mt-2 mb-0" role="status"></p>
+                <p id="locationStatusLine" class="map-note mt-1 mb-0" aria-live="polite"></p>
+                <p class="map-note mt-1 mb-0">
+                    Location is requested only when you tap Find Nearby Puja. On a live site, geolocation may require <strong>HTTPS</strong>.
+                </p>
             </div>
         </section>
 
-        <!-- ===== PUJA LISTING SECTION ===== -->
-        <section class="puja-container">
-            <!-- Desktop Table View -->
-            <div class="table-responsive">
+        <section class="puja-container p-3 p-md-4">
+            <h2 class="h4 section-heading mb-3">All pujas — plan your visits</h2>
+
+            <div class="table-responsive d-none d-md-block">
                 <table class="table puja-table" id="pujaTable">
                     <thead>
                         <tr>
-                            <th>Add to Itinerary</th>
-                            <th>Puja Name</th>
-                            <th>Date(s)</th>
-                            <th>Address</th>
-                            <th>Facebook Link or Website</th>
+                            <th scope="col">Add to Plan</th>
+                            <th scope="col">Puja Name</th>
+                            <th scope="col">Area</th>
+                            <th scope="col">Date(s)</th>
+                            <th scope="col">Address</th>
+                            <th scope="col">Distance</th>
+                            <th scope="col">Website / Social</th>
                         </tr>
                     </thead>
-                    <tbody id="pujaTableBody">
-                        <!-- Puja data will be populated by JavaScript -->
-                    </tbody>
+                    <tbody id="pujaTableBody"></tbody>
                 </table>
             </div>
 
-            <!-- Mobile Card View -->
-            <div class="puja-cards" id="pujaCards">
-                <!-- Puja cards will be populated by JavaScript -->
-            </div>
+            <div class="puja-cards d-md-none" id="pujaCards"></div>
         </section>
+    </main>
 
-        <!-- ===== INTERACTIVE MAP SECTION ===== -->
-        <section class="map-section">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <h2 class="section-title text-center mb-4">
-                            <i class="fas fa-map-marked-alt text-festive"></i>
-                            Interactive Puja Map
-                        </h2>
-                        <p class="text-center text-muted mb-4">
-                            Click on the markers to see puja details and get directions
-                        </p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <div class="map-container">
-                            <div id="pujaMap" class="puja-map"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-
-      <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Leaflet JS for interactive map -->
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    
-
-    <!-- ===== FLOATING ITINERARY BUTTON ===== -->
-    <button class="floating-itinerary-btn" id="itineraryBtn">
-        <i class="fas fa-list"></i>
+    <button type="button" class="floating-itinerary-btn" id="itineraryBtn" aria-label="Open My Puja Plan">
+        <i class="fas fa-list me-1" aria-hidden="true"></i>
+        My Puja Plan
         <span class="itinerary-count" id="itineraryCount">0</span>
     </button>
 
-    <!-- ===== ITINERARY SIDEBAR ===== -->
-    <div class="itinerary-sidebar" id="itinerarySidebar">
+    <div class="sidebar-overlay" id="sidebarOverlay" aria-hidden="true"></div>
+    <aside class="itinerary-sidebar" id="itinerarySidebar" aria-label="My Puja Plan">
         <div class="sidebar-header">
-            <h4><i class="fas fa-route"></i> My Itinerary</h4>
-            <button class="close-sidebar" id="closeSidebar">
-                <i class="fas fa-times"></i>
+            <h4><i class="fas fa-route" aria-hidden="true"></i> My Puja Plan</h4>
+            <button type="button" class="close-sidebar" id="closeSidebar" aria-label="Close My Puja Plan">
+                <i class="fas fa-times" aria-hidden="true"></i>
             </button>
         </div>
-        <div class="sidebar-content">
-            <div id="itineraryList" class="itinerary-list">
-                <p class="text-muted text-center">No pujas selected yet</p>
+        <div class="sidebar-body">
+            <div id="itineraryList" class="itinerary-list"></div>
+            <div class="sidebar-actions" id="sidebarActions">
+                <h5 class="h6 text-uppercase text-muted mb-2">Share Your Plan</h5>
+                <button type="button" class="btn share-btn whatsapp w-100 mb-2" id="shareWhatsApp">
+                    <i class="fab fa-whatsapp me-1" aria-hidden="true"></i> WhatsApp Share
+                </button>
+                <button type="button" class="btn share-btn email w-100 mb-2" id="shareEmail">
+                    <i class="fas fa-envelope me-1" aria-hidden="true"></i> Email Share
+                </button>
+                <button type="button" class="btn btn-outline-secondary share-btn w-100 mb-2" id="copyText">
+                    <i class="fas fa-copy me-1" aria-hidden="true"></i> Copy Text
+                </button>
+                <button type="button" class="btn btn-outline-danger share-btn w-100" id="clearPlan">
+                    <i class="fas fa-trash me-1" aria-hidden="true"></i> Clear Plan
+                </button>
             </div>
-            <div class="sidebar-actions" id="sidebarActions" style="display: none;">
-                <button class="btn btn-festive w-100 mb-2" id="shareWhatsApp">
-                    <i class="fab fa-whatsapp"></i> Share on WhatsApp
-                </button>
-                <button class="btn btn-outline-primary w-100 mb-2" id="shareFacebook">
-                    <i class="fab fa-facebook"></i> Share on Facebook
-                </button>
-                <button class="btn btn-outline-success w-100 mb-2" id="shareEmail">
-                    <i class="fas fa-envelope"></i> Email Itinerary
-                </button>
-                <button class="btn btn-outline-secondary w-100" id="copyText">
-                    <i class="fas fa-copy"></i> Copy as Text
-                </button>
-            </div>
+            <p id="shareEmptyHint" class="small text-muted mb-0">Select at least one puja to share your plan.</p>
         </div>
-    </div>
+    </aside>
 
-    <!-- ===== SIDEBAR OVERLAY ===== -->
-    <div class="sidebar-overlay" id="sidebarOverlay"></div>
-
-    <!-- ===== FOOTER ===== -->
     <footer class="footer">
         <div class="container">
             <div class="row">
@@ -1148,9 +749,9 @@
                 <div class="col-md-4 text-md-end">
                     <p class="acknowledgement">
                         <small>
-                            Created with ❤️ by 
-                            <a href="https://www.youtube.com/@NodesofTravel" target="_blank" class="footer-link">
-                                <i class="fab fa-youtube"></i> Nodes of Travel
+                            Created with ❤️ by
+                            <a href="https://www.youtube.com/@NodesofTravel" target="_blank" rel="noopener noreferrer" class="footer-link">
+                                <i class="fab fa-youtube" aria-hidden="true"></i> Nodes of Travel
                             </a>
                         </small>
                     </p>
@@ -1159,476 +760,208 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
     <script>
-        // ===== PUJA DATA =====
+        // ===== 2026 PUJA DATA =====
+        // Authoritative list: Durga Pujo 2026 directory (name, dates, address).
+        // Optional fields (lat/lng, restaurants, itinerary) stay empty for later APIs.
+        const PUJA_YEAR = 2026;
         const pujaData = [
             {
                 id: 1,
                 name: "Agomoni Cultural Association of Durham",
-                dates: "27th - 28th Sep",
-                address: "1867 Valley Farm Rd, Pickering, ON L1V 6K7",
-                facebook: "https://www.facebook.com/agomoni.ca"
+                dates: "17th - 18th Oct",
+                address: "Pickering Event Centre, 1867 Valley Farm Rd, Pickering",
+                facebook: "https://www.facebook.com/agomoni.ca",
+                lat: 43.8392345,
+                lng: -79.0814572
             },
             {
                 id: 2,
                 name: "Amantran Cultural Association",
-                dates: "4th - 5th Oct",
-                address: "2155 Liverpool Rd, Pickering, ON L1X 1W1",
-                facebook: "https://www.facebook.com/amantran.gta/"
+                dates: "23rd - 25th Oct",
+                address: "Pine Ridge Secondary School, 2155 Liverpool Rd, Pickering",
+                facebook: "https://www.facebook.com/amantran.gta/",
+                lat: 43.8515156,
+                lng: -79.0954898
             },
             {
                 id: 3,
                 name: "Amar Pujo Cultural Association of Toronto",
-                dates: "27th - 28th Sep",
-                address: "The Pearl Banquet, Mississauga",
-                facebook: "https://www.facebook.com/amarpujotoronto"
+                dates: "17th - 18th Oct",
+                address: "Pearl Banquet & Convention Centre, 1638 Aimco Blvd, Mississauga, ON L4W 1V1",
+                facebook: "https://www.facebook.com/amarpujotoronto",
+                lat: 43.64153,
+                lng: -79.621333
             },
             {
                 id: 4,
                 name: "Bangiya Parishad Toronto (BPT)",
-                dates: "3rd - 5th Oct",
+                dates: "16th - 19th Oct",
                 address: "140 Millweek Dr, Tagore Centre",
-                facebook: "https://www.facebook.com/bangiyaparishad.ca"
+                area: "North York",
+                facebook: "https://www.facebook.com/bangiyaparishad.ca",
+                lat: 43.7611375,
+                lng: -79.5686662
             },
             {
                 id: 5,
                 name: "Bangladesh Canada Hindu Mandir (Dohme Ave)",
-                dates: "27th to 1st Oct",
+                dates: "15th - 20th Oct",
                 address: "16 Dohme Ave, East York",
-                facebook: "http://hindumondir.org/"
+                facebook: "http://hindumondir.org/",
+                lat: 43.712452,
+                lng: -79.3126532
             },
             {
                 id: 6,
                 name: "Bharatsevasram",
-                dates: "27th Sep to 1st Oct",
+                dates: "16th - 20th Oct",
                 address: "2107 Codlin Crescent, Etobicoke",
-                facebook: "https://bsstoronto.org/"
+                facebook: "https://bsstoronto.org/",
+                lat: 43.7491485,
+                lng: -79.6360897
             },
             {
                 id: 7,
                 name: "Bongo Paribar",
-                dates: "27th - 28th Sep",
+                dates: "17th - 18th Oct",
                 address: "St. Volodymyr Cultural Centre - SVCC, 1280 Dundas St W, Oakville",
-                facebook: "https://www.facebook.com/bongoporibargta"
+                facebook: "https://www.facebook.com/bongoporibargta",
+                lat: 43.4559648,
+                lng: -79.7526503
             },
             {
                 id: 8,
-                name: "Dhar Barir Pujo",
-                dates: "27th to 1st Oct",
-                address: "601 Brimley road, Scarborough",
-                facebook: "Facebook.com/aritrasdurgapujo"
+                name: "Durba Foundation",
+                dates: "10th - 11th Oct",
+                address: "Ajax High School, 105 Bayly St E, Ajax",
+                facebook: "https://www.facebook.com/durba.foundation",
+                lat: 43.8440319,
+                lng: -79.0136439
             },
             {
                 id: 9,
-                name: "Durba Foundation",
-                dates: "27th - 28th Sep",
-                address: "1355 Harwood Ave N, Ajax, ON L1T 4G8",
-                facebook: "https://www.facebook.com/durba.foundation"
+                name: "Durham Durgotsab",
+                dates: "10th - 11th Oct",
+                address: "Dunbarton High School, 655 Sheppard Ave, Pickering",
+                facebook: "https://www.facebook.com/durhamdurgotsab",
+                lat: 43.8199224,
+                lng: -79.1190739
             },
             {
                 id: 10,
-                name: "Durham Durgotsab",
-                dates: "4th - 5th Oct",
-                address: "1355 Harwood Ave N, Ajax, ON L1T 4G8",
-                facebook: "https://www.facebook.com/durhamdurgotsab"
+                name: "Grand River Cultural Association- GRCA Durga Puja",
+                dates: "11th - 12th Oct",
+                address: "Victoria Park Pavillion, 80 Schneider Ave, Kitchener",
+                facebook: "https://www.facebook.com/profile.php?id=61565494949425",
+                lat: 43.4456973,
+                lng: -80.4991423
             },
             {
                 id: 11,
-                name: "Grand River Cultural Association- GRCA Durga Puja",
-                dates: "26th to 28th Sep",
-                address: "Conestoga Banquet Hall, 617 King St N, Waterloo",
-                facebook: "https://www.facebook.com/profile.php?id=61565494949425"
+                name: "KWGC Durgotsav",
+                dates: "9th - 11th Oct",
+                address: "St Agatha Community Centre, Erb's Road, St. Agatha",
+                area: "Cambridge / Kitchener",
+                facebook: "https://www.facebook.com/profile.php?id=61552044939816",
+                lat: 43.4330841,
+                lng: -80.6314471
             },
             {
                 id: 12,
-                name: "KWGC Durgotsav",
-                dates: "26th to 28th Sep",
-                address: "St Agatha Community Centre",
-                facebook: "https://www.facebook.com/profile.php?id=61552044939816"
+                name: "Royal City Durga Puja",
+                dates: "24th - 25th Oct",
+                address: "Puslinch community centre, 23 Brock Rd S, Puslinch",
+                facebook: "https://www.facebook.com/royalcitydurgapujaguelph",
+                lat: 43.4714726,
+                lng: -80.1516576
             },
             {
                 id: 13,
-                name: "Royal City Durga Puja",
-                dates: "4th - 5th Oct",
-                address: "The Guelph Estate, 340 Woodlawn Rd W",
-                facebook: "https://www.facebook.com/royalcitydurgapujaguelph"
+                name: "Sanatan Bengali Cultural Association",
+                dates: "16th - 17th Oct",
+                address: "Trillium Lutheran Church, 22 Willow St, Waterloo ON",
+                facebook: "https://www.facebook.com/groups/313402081465042/",
+                lat: 43.464932,
+                lng: -80.5168492
             },
             {
                 id: 14,
-                name: "Sanatan Bengali Cultural Association",
-                dates: "27th - 28th Sep",
-                address: "22 Willow St, Waterloo ON",
-                facebook: "https://www.facebook.com/groups/313402081465042/"
+                name: "Tookhar Festivals",
+                dates: "24th - 25th Oct",
+                address: "Swagat Banquet Hall, 6991 Millcreek Dr, Mississauga, ON L5N 6B8",
+                facebook: "https://www.facebook.com/TookharFestivals",
+                lat: 43.5977873,
+                lng: -79.7593984
             },
             {
                 id: 15,
                 name: "Toronto Bengali Cultural Society - TBCS",
-                dates: "27th - 28th Sep",
-                address: "Sankkamam Party Hall, 42 Tuxedo Ct, Scarborough",
-                facebook: "https://www.facebook.com/profile.php?id=61564868422075"
+                dates: "10th - 11th Oct",
+                address: "Bodhi Meditation Toronto Canada, 180 Yorkland Blvd, North York",
+                facebook: "https://www.facebook.com/profile.php?id=61564868422075",
+                lat: 43.7711403,
+                lng: -79.3351502
             },
             {
                 id: 16,
                 name: "Toronto Durgabari",
-                dates: "27th to 1st Oct",
+                dates: "16th - 20th Oct",
                 address: "427 Birchmount Rd, Scarborough",
-                facebook: "https://www.torontodurgabari.com/"
+                facebook: "https://www.torontodurgabari.com/",
+                lat: 43.7040241,
+                lng: -79.2667102
             },
             {
                 id: 17,
                 name: "Toronto Hindu Dharmashram",
-                dates: "27th Sep to 1st Oct",
+                dates: "16th - 20th Oct",
                 address: "1510 Birchmount Rd, Scarborough",
-                facebook: "http://www.hindudharmasram.com/"
+                facebook: "http://www.hindudharmasram.com/",
+                lat: 43.7578908,
+                lng: -79.2892481
             },
             {
                 id: 18,
                 name: "Toronto Kalibari",
-                dates: "27th to 1st Oct",
+                dates: "15th - 20th Oct",
                 address: "6815 Professional Ct, Mississauga",
-                facebook: "https://www.kalibaritoronto.com/"
+                facebook: "https://kalibaritoronto.com/durga-puja-2/",
+                lat: 43.7075292,
+                lng: -79.6298277
             },
             {
                 id: 19,
                 name: "Utsav Bengali Association London",
-                dates: "4th - 5th Oct",
-                address: "John Paul II Secondary School, London ON",
-                facebook: "https://www.facebook.com/groups/utsavontario"
+                dates: "24th - 25th Oct",
+                address: "London ON",
+                facebook: "https://www.facebook.com/groups/utsavontario",
+                lat: 42.9836747,
+                lng: -81.2496068
             },
             {
                 id: 20,
                 name: "Vedanta Society of Toronto",
-                dates: "27th Sep to 1st Oct",
-                address: "Ramkrishna Mission - 120 Emmett Ave, York",
-                facebook: "https://vedantatoronto.ca/special-events"
+                dates: "16th - 20th Oct",
+                address: "Ramkrishna Mission – 120 Emmett Ave, York",
+                facebook: "https://vedantatoronto.ca/special-events",
+                lat: 43.6869788,
+                lng: -79.5086286
             },
             {
                 id: 21,
                 name: "Niagara Sharodiya",
-                dates: "4th - 5th Oct",
+                dates: "24th - 25th Oct",
                 address: "2691 Portage Road, Niagara Falls",
-                facebook: "https://www.facebook.com/profile.php?id=100094011860205"
+                facebook: "https://www.facebook.com/profile.php?id=100094011860205",
+                lat: 43.1342251,
+                lng: -79.0940241
             }
         ];
 
-        // ===== SEARCH AND SORT FUNCTIONALITY =====
-        document.addEventListener('DOMContentLoaded', function() {
-            const searchInput = document.getElementById('searchInput');
-            const sortSelect = document.getElementById('sortSelect');
-            const resultCount = document.getElementById('resultCount');
-            
-            // Search functionality
-            searchInput.addEventListener('input', handleSearch);
-            sortSelect.addEventListener('change', handleSearch);
-            
-            // Itinerary functionality
-            initializeItinerary();
-            
-            // Initialize map
-            initializeMap();
-            
-            // Initial render
-            handleSearch();
-        });
-
-        function handleSearch() {
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const sortBy = document.getElementById('sortSelect').value;
-            
-            let filteredPujas = pujaData.filter(puja => 
-                puja.name.toLowerCase().includes(searchTerm) ||
-                puja.address.toLowerCase().includes(searchTerm) ||
-                puja.dates.toLowerCase().includes(searchTerm)
-            );
-            
-            // Sort the filtered results
-            filteredPujas.sort((a, b) => {
-                if (sortBy === 'name') {
-                    return a.name.localeCompare(b.name);
-                } else if (sortBy === 'date') {
-                    const dateA = getDateValue(a.dates);
-                    const dateB = getDateValue(b.dates);
-                    return dateA - dateB;
-                }
-                return 0;
-            });
-            
-            // Update result count
-            document.getElementById('resultCount').textContent = filteredPujas.length;
-            
-            // Render the results
-            renderTable(filteredPujas);
-            renderCards(filteredPujas);
-        }
-
-        function getDateValue(dateStr) {
-            if (dateStr.includes('Sep')) return 1;
-            if (dateStr.includes('Oct')) return 2;
-            if (dateStr.includes('TBA')) return 999;
-            return 0;
-        }
-
-        function renderTable(pujas) {
-            const tableBody = document.getElementById('pujaTableBody');
-            if (!tableBody) return;
-            
-            tableBody.innerHTML = pujas.map(puja => {
-                const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(puja.address)}`;
-                return `
-                    <tr>
-                        <td>
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" value="${puja.id}" id="puja${puja.id}" onchange="handleCheckboxChange(${puja.id}, this.checked)">
-                            </div>
-                        </td>
-                        <td>${puja.name}</td>
-                        <td>${puja.dates}</td>
-                        <td>
-                            <a href="${googleMapsUrl}" target="_blank" class="text-decoration-none">
-                                <i class="fas fa-map-marker-alt text-danger"></i> ${puja.address}
-                            </a>
-                        </td>
-                        <td>
-                            ${puja.facebook ? 
-                                `<a href="${puja.facebook}" target="_blank" class="btn btn-sm btn-outline-primary">
-                                    <i class="${puja.facebook.includes('facebook.com') ? 'fab fa-facebook' : 'fas fa-globe'}"></i> ${puja.facebook.includes('facebook.com') ? 'Facebook' : 'Website'}
-                                </a>` : 
-                                '<span class="text-muted">No link available</span>'
-                            }
-                        </td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        function renderCards(pujas) {
-            const cardsContainer = document.getElementById('pujaCards');
-            if (!cardsContainer) return;
-            
-            cardsContainer.innerHTML = pujas.map(puja => {
-                const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(puja.address)}`;
-                return `
-                    <div class="col-md-6 col-lg-4 mb-4">
-                        <div class="card h-100 puja-card">
-                            <div class="card-body">
-                                <div class="form-check mb-3">
-                                    <input class="form-check-input" type="checkbox" value="${puja.id}" id="cardPuja${puja.id}" onchange="handleCheckboxChange(${puja.id}, this.checked)">
-                                    <label class="form-check-label" for="cardPuja${puja.id}">
-                                        <h5 class="card-title">${puja.name}</h5>
-                                    </label>
-                                </div>
-                                <p class="card-text">
-                                    <strong>Dates:</strong> ${puja.dates}<br>
-                                    <strong>Address:</strong> 
-                                    <a href="${googleMapsUrl}" target="_blank" class="text-decoration-none">
-                                        <i class="fas fa-map-marker-alt text-danger"></i> ${puja.address}
-                                    </a>
-                                </p>
-                                ${puja.facebook ? 
-                                    `<a href="${puja.facebook}" target="_blank" class="btn btn-festive">
-                                        <i class="${puja.facebook.includes('facebook.com') ? 'fab fa-facebook' : 'fas fa-globe'}"></i> ${puja.facebook.includes('facebook.com') ? 'Facebook Page' : 'Website'}
-                                    </a>` : 
-                                    '<span class="text-muted">No link available</span>'
-                                }
-                            </div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // ===== ITINERARY FUNCTIONALITY =====
-        let selectedPujas = [];
-
-        function initializeItinerary() {
-            const itineraryBtn = document.getElementById('itineraryBtn');
-            const closeSidebar = document.getElementById('closeSidebar');
-            const sidebarOverlay = document.getElementById('sidebarOverlay');
-            
-            // Itinerary sidebar
-            itineraryBtn.addEventListener('click', toggleSidebar);
-            closeSidebar.addEventListener('click', closeItinerarySidebar);
-            sidebarOverlay.addEventListener('click', closeItinerarySidebar);
-
-            // Share functionality
-            document.getElementById('shareWhatsApp').addEventListener('click', shareToWhatsApp);
-            document.getElementById('shareFacebook').addEventListener('click', shareToFacebook);
-            document.getElementById('shareEmail').addEventListener('click', shareToEmail);
-            document.getElementById('copyText').addEventListener('click', copyItineraryText);
-        }
-
-        function toggleSidebar() {
-            const sidebar = document.getElementById('itinerarySidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            
-            sidebar.classList.toggle('open');
-            overlay.classList.toggle('active');
-        }
-
-        function closeItinerarySidebar() {
-            const sidebar = document.getElementById('itinerarySidebar');
-            const overlay = document.getElementById('sidebarOverlay');
-            
-            sidebar.classList.remove('open');
-            overlay.classList.remove('active');
-        }
-
-        function updateItinerary() {
-            const itineraryList = document.getElementById('itineraryList');
-            const sidebarActions = document.getElementById('sidebarActions');
-            const itineraryCount = document.getElementById('itineraryCount');
-            
-            if (selectedPujas.length === 0) {
-                itineraryList.innerHTML = '<p class="text-muted text-center">No pujas selected yet</p>';
-                sidebarActions.style.display = 'none';
-            } else {
-                itineraryList.innerHTML = selectedPujas.map(puja => `
-                    <div class="itinerary-item">
-                        <h6>${puja.name}</h6>
-                        <p><strong>Dates:</strong> ${puja.dates}</p>
-                        <p><strong>Location:</strong> ${puja.address}</p>
-                        <button class="btn btn-sm btn-outline-danger" onclick="removeFromItinerary(${puja.id})">
-                            <i class="fas fa-times"></i> Remove
-                        </button>
-                    </div>
-                `).join('');
-                sidebarActions.style.display = 'block';
-            }
-            
-            itineraryCount.textContent = selectedPujas.length;
-        }
-
-        function addToItinerary(pujaId) {
-            const puja = pujaData.find(p => p.id === pujaId);
-            if (puja && !selectedPujas.find(p => p.id === pujaId)) {
-                selectedPujas.push(puja);
-                updateItinerary();
-            }
-        }
-
-        function removeFromItinerary(pujaId) {
-            selectedPujas = selectedPujas.filter(p => p.id !== pujaId);
-            updateItinerary();
-            
-            // Uncheck the checkbox
-            const checkbox = document.getElementById(`puja${pujaId}`);
-            const cardCheckbox = document.getElementById(`cardPuja${pujaId}`);
-            if (checkbox) checkbox.checked = false;
-            if (cardCheckbox) cardCheckbox.checked = false;
-        }
-
-        function handleCheckboxChange(pujaId, isChecked) {
-            if (isChecked) {
-                addToItinerary(pujaId);
-            } else {
-                removeFromItinerary(pujaId);
-            }
-        }
-
-        function shareToWhatsApp() {
-            const text = generateItineraryText();
-            const url = `https://wa.me/?text=${encodeURIComponent(text)}`;
-            window.open(url, '_blank');
-        }
-
-        function shareToFacebook() {
-            const text = generateItineraryText();
-            const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}&quote=${encodeURIComponent(text)}`;
-            window.open(url, '_blank');
-        }
-
-        function shareToEmail() {
-            const text = generateItineraryText();
-            const subject = "My Durga Puja 2025 Itinerary";
-            const body = text;
-            const url = `mailto:?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-            window.open(url);
-        }
-
-        function copyItineraryText() {
-            const text = generateItineraryText();
-            navigator.clipboard.writeText(text).then(() => {
-                // Show success message
-                const btn = document.getElementById('copyText');
-                const originalText = btn.innerHTML;
-                btn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                btn.style.background = '#28a745';
-                
-                setTimeout(() => {
-                    btn.innerHTML = originalText;
-                    btn.style.background = '';
-                }, 2000);
-            }).catch(err => {
-                console.error('Failed to copy text: ', err);
-                alert('Failed to copy text. Please try again.');
-            });
-        }
-
-        function generateItineraryText() {
-            let text = "🎉 My Durga Puja 2025 Itinerary 🎉\n\n";
-            selectedPujas.forEach((puja, index) => {
-                text += `${index + 1}. ${puja.name}\n`;
-                text += `   📅 Dates: ${puja.dates}\n`;
-                text += `   📍 Location: ${puja.address}\n`;
-                text += `   🔗 ${puja.facebook.includes('facebook.com') ? 'Facebook' : 'Website'}: ${puja.facebook}\n\n`;
-            });
-            text += "Happy Durga Puja! 🕉️";
-            return text;
-        }
-
-        // ===== INTERACTIVE MAP FUNCTIONALITY =====
-        let pujaMap;
-        let mapMarkers = [];
-
-        function initializeMap() {
-            // Initialize the map centered on GTA area
-            pujaMap = L.map('pujaMap').setView([43.6532, -79.3832], 10);
-
-            // Add OpenStreetMap tiles
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: '© OpenStreetMap contributors'
-            }).addTo(pujaMap);
-
-            // Add markers for all pujas
-            addPujaMarkers();
-        }
-
-        function addPujaMarkers() {
-            // Clear existing markers
-            mapMarkers.forEach(marker => pujaMap.removeLayer(marker));
-            mapMarkers = [];
-
-            pujaData.forEach((puja, index) => {
-                // Geocode the address to get coordinates
-                geocodeAddress(puja.address, (lat, lng) => {
-                    if (lat && lng) {
-                        // Create custom marker with area-based color
-                        const markerColor = getMarkerColor(puja.address);
-                        const marker = L.marker([lat, lng], {
-                            icon: L.divIcon({
-                                className: 'custom-marker',
-                                html: `<div class="custom-marker" style="background-color: ${markerColor};">${index + 1}</div>`,
-                                iconSize: [30, 30],
-                                iconAnchor: [15, 15]
-                            })
-                        });
-
-                        // Create popup content
-                        const popupContent = createPopupContent(puja);
-                        marker.bindPopup(popupContent);
-
-                        // Add marker to map
-                        marker.addTo(pujaMap);
-                        mapMarkers.push(marker);
-                    }
-                });
-            });
-        }
-
-        // Predefined coordinates for major GTA areas
         const gtaCoordinates = {
             'Toronto': [43.6532, -79.3832],
             'Scarborough': [43.7731, -79.2578],
@@ -1646,6 +979,8 @@
             'Whitby': [43.8975, -78.9428],
             'Oshawa': [43.8971, -78.8658],
             'Waterloo': [43.4643, -80.5204],
+            'Kitchener': [43.4516, -80.4925],
+            'Cambridge': [43.3616, -80.3144],
             'Guelph': [43.5448, -80.2482],
             'London': [42.9849, -81.2453],
             'Hamilton': [43.2557, -79.8711],
@@ -1654,131 +989,738 @@
             'Niagara Falls': [43.0896, -79.0849]
         };
 
-        function geocodeAddress(address, callback) {
-            // First try to find coordinates based on city names in the address
-            const cityMatch = findCityInAddress(address);
-            if (cityMatch) {
-                callback(cityMatch[0], cityMatch[1]);
-                return;
-            }
+        // Area labels parsed from addresses (including 2026 cities not in the coord table).
+        // Do not invent map coordinates for these — Nominatim can resolve them later.
+        const extraAreaNames = ['Puslinch'];
 
-            // Use Nominatim (OpenStreetMap's geocoding service) - free, no API key required
-            const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address + ', Ontario, Canada')}&limit=1`;
-            
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    if (data && data.length > 0) {
-                        const lat = parseFloat(data[0].lat);
-                        const lng = parseFloat(data[0].lon);
-                        // Validate coordinates are in reasonable GTA area
-                        if (lat >= 43.0 && lat <= 44.5 && lng >= -80.5 && lng <= -78.5) {
-                            callback(lat, lng);
-                        } else {
-                            // Use fallback coordinates for the area
-                            const fallback = getFallbackCoordinates(address);
-                            callback(fallback[0], fallback[1]);
-                        }
-                    } else {
-                        // Use fallback coordinates for the area
-                        const fallback = getFallbackCoordinates(address);
-                        callback(fallback[0], fallback[1]);
-                    }
-                })
-                .catch(error => {
-                    console.log('Geocoding error:', error);
-                    // Use fallback coordinates for the area
-                    const fallback = getFallbackCoordinates(address);
-                    callback(fallback[0], fallback[1]);
-                });
+        /**
+         * Planning state — kept simple and extensible for later extras
+         * (nearby restaurants, timed itinerary, live puja status).
+         * No APIs are called yet.
+         */
+        const pujaPlan = {
+            selectedIds: [],
+            extras: {
+                restaurantsByPujaId: {},
+                itinerarySlots: []
+            }
+        };
+
+        let filteredPujas = [...pujaData];
+        let pujaMap = null;
+        let markerLayer = null;
+        let userMarker = null;
+        let userLocation = null;
+        const coordCache = {};
+
+        const searchInput = document.getElementById('searchInput');
+        const sortSelect = document.getElementById('sortSelect');
+        const resultCount = document.getElementById('resultCount');
+        const featuredCarousel = document.getElementById('featuredCarousel');
+        const pujaTableBody = document.getElementById('pujaTableBody');
+        const pujaCards = document.getElementById('pujaCards');
+        const itineraryBtn = document.getElementById('itineraryBtn');
+        const itineraryCount = document.getElementById('itineraryCount');
+        const itinerarySidebar = document.getElementById('itinerarySidebar');
+        const sidebarOverlay = document.getElementById('sidebarOverlay');
+        const closeSidebar = document.getElementById('closeSidebar');
+        const itineraryList = document.getElementById('itineraryList');
+        const sidebarActions = document.getElementById('sidebarActions');
+        const shareEmptyHint = document.getElementById('shareEmptyHint');
+        const geoMessage = document.getElementById('geoMessage');
+        const locationStatusLine = document.getElementById('locationStatusLine');
+
+        function escapeHtml(value) {
+            return String(value)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        function getLinkUrl(raw) {
+            if (!raw) return '';
+            if (/^https?:\/\//i.test(raw)) return raw;
+            return 'https://' + raw;
+        }
+
+        function isFacebookLink(raw) {
+            return /facebook\.com/i.test(raw || '');
+        }
+
+        function getMapsUrl(address) {
+            return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(address);
         }
 
         function findCityInAddress(address) {
-            const addressLower = address.toLowerCase();
-            for (const [city, coords] of Object.entries(gtaCoordinates)) {
+            const addressLower = (address || '').toLowerCase();
+            const cities = Object.keys(gtaCoordinates)
+                .concat(extraAreaNames)
+                .sort((a, b) => b.length - a.length);
+            for (const city of cities) {
                 if (addressLower.includes(city.toLowerCase())) {
-                    return coords;
+                    return city;
                 }
             }
+            return '';
+        }
+
+        function getArea(puja) {
+            if (puja.area) return puja.area;
+            return findCityInAddress(puja.address);
+        }
+
+        function hasConfirmedDates(dateStr) {
+            return !/real pujo dates/i.test(dateStr || '');
+        }
+
+        function getDateValue(dateStr) {
+            const s = (dateStr || '').toLowerCase();
+            if (!hasConfirmedDates(s) || s.includes('tba')) return Number.MAX_SAFE_INTEGER;
+            const dayMatch = s.match(/(\d+)/);
+            const day = dayMatch ? parseInt(dayMatch[1], 10) : 1;
+            if (s.includes('sep')) return new Date(PUJA_YEAR, 8, day).getTime();
+            if (s.includes('oct')) return new Date(PUJA_YEAR, 9, day).getTime();
+            return 0;
+        }
+
+        function calculateDistanceKm(lat1, lng1, lat2, lng2) {
+            const R = 6371;
+            const toRad = (deg) => (deg * Math.PI) / 180;
+            const dLat = toRad(lat2 - lat1);
+            const dLng = toRad(lng2 - lng1);
+            const a =
+                Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+                Math.sin(dLng / 2) * Math.sin(dLng / 2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            return R * c;
+        }
+
+        function getPujaCoords(puja) {
+            if (puja.lat != null && puja.lng != null) {
+                return { lat: puja.lat, lng: puja.lng };
+            }
+            const cached = coordCache[puja.address];
+            if (cached && cached.lat != null) return cached;
             return null;
         }
 
-        function getFallbackCoordinates(address) {
-            const cityMatch = findCityInAddress(address);
-            if (cityMatch) {
-                // Add small random offset to avoid overlapping markers
-                const offsetLat = (Math.random() - 0.5) * 0.01;
-                const offsetLng = (Math.random() - 0.5) * 0.01;
-                return [cityMatch[0] + offsetLat, cityMatch[1] + offsetLng];
+        function getPujaDistanceKm(puja) {
+            if (!userLocation) return null;
+            const coords = getPujaCoords(puja);
+            if (!coords) return null;
+            return calculateDistanceKm(userLocation.lat, userLocation.lng, coords.lat, coords.lng);
+        }
+
+        function formatKm(km) {
+            return (Math.round(km * 10) / 10) + ' km';
+        }
+
+        function getClosestPujaId(list) {
+            if (!userLocation || !list.length) return null;
+            let bestId = null;
+            let bestD = Infinity;
+            for (const puja of list) {
+                const d = getPujaDistanceKm(puja);
+                if (d == null) continue;
+                if (d < bestD || (bestId != null && d === bestD && puja.id < bestId)) {
+                    bestD = d;
+                    bestId = puja.id;
+                }
             }
-            // Default to Toronto if no city found
-            return [43.6532, -79.3832];
+            return bestId;
+        }
+
+        function closestBadge(pujaId, closestId) {
+            if (userLocation && closestId === pujaId) {
+                return ' <span class="badge-closest">Closest</span>';
+            }
+            return '';
+        }
+
+        function isSelected(id) {
+            return pujaPlan.selectedIds.indexOf(id) !== -1;
+        }
+
+        function updateLocationStatusLine() {
+            if (userLocation) {
+                locationStatusLine.textContent = 'Distances shown from your current location.';
+            } else if (sortSelect.value === 'distance') {
+                locationStatusLine.textContent = 'Tap Find Nearby Puja to sort by distance.';
+            } else {
+                locationStatusLine.textContent = '';
+            }
+        }
+
+        function applyFilterAndSort() {
+            const q = searchInput.value.toLowerCase().trim();
+            filteredPujas = pujaData.filter((puja) => {
+                const blob = [puja.name, puja.address, puja.dates, getArea(puja)].join(' ').toLowerCase();
+                return blob.includes(q);
+            });
+
+            const mode = sortSelect.value;
+            filteredPujas.sort((a, b) => {
+                if (mode === 'area') {
+                    return (getArea(a) || 'zzz').localeCompare(getArea(b) || 'zzz') || a.name.localeCompare(b.name);
+                }
+                if (mode === 'date') {
+                    return getDateValue(a.dates) - getDateValue(b.dates) || a.name.localeCompare(b.name);
+                }
+                if (mode === 'distance') {
+                    if (userLocation) {
+                        const da = getPujaDistanceKm(a);
+                        const db = getPujaDistanceKm(b);
+                        if (da == null && db == null) return a.name.localeCompare(b.name);
+                        if (da == null) return 1;
+                        if (db == null) return -1;
+                        return da - db || a.name.localeCompare(b.name);
+                    }
+                    return a.name.localeCompare(b.name);
+                }
+                return a.name.localeCompare(b.name);
+            });
+
+            resultCount.textContent = String(filteredPujas.length);
+            updateLocationStatusLine();
+            renderFeaturedCarousel();
+            renderTable();
+            renderCards();
+            renderMapMarkers();
+        }
+
+        function renderFeaturedCarousel() {
+            const featured = filteredPujas.slice(0, 8);
+            const closestId = getClosestPujaId(filteredPujas);
+
+            if (!featured.length) {
+                featuredCarousel.innerHTML = '<div class="empty-pill p-3 text-center w-100"><span class="small">No featured pujas match your search.</span></div>';
+                return;
+            }
+
+            featuredCarousel.innerHTML = featured.map((puja) => {
+                const dKm = getPujaDistanceKm(puja);
+                const distLine = dKm != null
+                    ? '<p class="small text-muted mb-2"><strong>' + formatKm(dKm) + '</strong> away</p>'
+                    : '<p class="small text-muted mb-2">Enable location to see distance</p>';
+                const area = getArea(puja);
+                return (
+                    '<article class="featured-card p-3 d-flex flex-column">' +
+                        '<div class="d-flex justify-content-between align-items-start gap-2 mb-2">' +
+                            '<h3 class="h6 mb-0">' + escapeHtml(puja.name) + closestBadge(puja.id, closestId) + '</h3>' +
+                        '</div>' +
+                        (area ? '<p class="small text-muted mb-1">' + escapeHtml(area) + '</p>' : '') +
+                        '<p class="small mb-1"><strong>Dates:</strong> ' + escapeHtml(puja.dates) + '</p>' +
+                        distLine +
+                        '<div class="d-flex align-items-center justify-content-between gap-2 mt-auto">' +
+                            '<div class="form-check mb-0">' +
+                                '<input class="form-check-input" type="checkbox" id="feat-' + puja.id + '" data-plan-id="' + puja.id + '"' +
+                                (isSelected(puja.id) ? ' checked' : '') + ' aria-label="Add ' + escapeHtml(puja.name) + ' to My Puja Plan">' +
+                                '<label class="form-check-label small" for="feat-' + puja.id + '">Add to Plan</label>' +
+                            '</div>' +
+                            '<a class="link-festive small" href="' + getMapsUrl(puja.address) + '" target="_blank" rel="noopener noreferrer">Map</a>' +
+                        '</div>' +
+                    '</article>'
+                );
+            }).join('');
+
+            featuredCarousel.querySelectorAll('[data-plan-id]').forEach((el) => {
+                el.addEventListener('change', () => toggleSelection(Number(el.getAttribute('data-plan-id')), el.checked));
+            });
+        }
+
+        function distanceCell(puja, closestId) {
+            const dKm = getPujaDistanceKm(puja);
+            if (dKm == null) return '—';
+            return formatKm(dKm) + closestBadge(puja.id, closestId);
+        }
+
+        function linkButton(puja, sizeClass) {
+            if (!puja.facebook) return '<span class="text-muted">No link available</span>';
+            const facebook = isFacebookLink(puja.facebook);
+            return (
+                '<a href="' + escapeHtml(getLinkUrl(puja.facebook)) + '" target="_blank" rel="noopener noreferrer" class="btn ' + sizeClass + ' btn-outline-primary">' +
+                    '<i class="' + (facebook ? 'fab fa-facebook' : 'fas fa-globe') + '" aria-hidden="true"></i> ' +
+                    (facebook ? 'Facebook' : 'Website') +
+                '</a>'
+            );
+        }
+
+        function renderTable() {
+            const closestId = getClosestPujaId(filteredPujas);
+            if (!filteredPujas.length) {
+                pujaTableBody.innerHTML = '<tr><td colspan="7"><div class="empty-pill p-4 text-center"><p class="mb-0 fw-semibold">No pujas match your search</p></div></td></tr>';
+                return;
+            }
+
+            pujaTableBody.innerHTML = filteredPujas.map((puja) => {
+                const area = getArea(puja);
+                return (
+                    '<tr>' +
+                        '<td>' +
+                            '<input class="form-check-input" type="checkbox" data-plan-id="' + puja.id + '"' +
+                            (isSelected(puja.id) ? ' checked' : '') +
+                            ' aria-label="Add ' + escapeHtml(puja.name) + ' to My Puja Plan">' +
+                        '</td>' +
+                        '<td class="fw-semibold">' + escapeHtml(puja.name) + closestBadge(puja.id, closestId) + '</td>' +
+                        '<td>' + escapeHtml(area || '—') + '</td>' +
+                        '<td>' + escapeHtml(puja.dates) + '</td>' +
+                        '<td><a class="link-festive" href="' + getMapsUrl(puja.address) + '" target="_blank" rel="noopener noreferrer">' +
+                            '<i class="fas fa-map-marker-alt text-danger" aria-hidden="true"></i> ' + escapeHtml(puja.address) +
+                        '</a></td>' +
+                        '<td class="small">' + distanceCell(puja, closestId) + '</td>' +
+                        '<td>' + linkButton(puja, 'btn-sm') + '</td>' +
+                    '</tr>'
+                );
+            }).join('');
+
+            pujaTableBody.querySelectorAll('[data-plan-id]').forEach((el) => {
+                el.addEventListener('change', () => toggleSelection(Number(el.getAttribute('data-plan-id')), el.checked));
+            });
+        }
+
+        function renderCards() {
+            const closestId = getClosestPujaId(filteredPujas);
+            if (!filteredPujas.length) {
+                pujaCards.innerHTML = '<div class="empty-pill p-4 text-center"><p class="mb-0 fw-semibold">No matching pujas</p></div>';
+                return;
+            }
+
+            pujaCards.innerHTML = filteredPujas.map((puja) => {
+                const area = getArea(puja);
+                const dKm = getPujaDistanceKm(puja);
+                const distLine = dKm != null
+                    ? '<p class="small mb-1"><strong>Distance:</strong> ' + formatKm(dKm) + closestBadge(puja.id, closestId) + '</p>'
+                    : '<p class="small mb-1 text-muted"><strong>Distance:</strong> Enable location</p>';
+                return (
+                    '<article class="puja-card">' +
+                        '<div class="d-flex justify-content-between align-items-start gap-2">' +
+                            '<h3 class="card-title mb-0">' + escapeHtml(puja.name) + closestBadge(puja.id, closestId) + '</h3>' +
+                            '<input class="form-check-input flex-shrink-0" type="checkbox" data-plan-id="' + puja.id + '"' +
+                            (isSelected(puja.id) ? ' checked' : '') +
+                            ' aria-label="Add ' + escapeHtml(puja.name) + ' to My Puja Plan">' +
+                        '</div>' +
+                        (area ? '<p class="small mb-1 mt-2"><strong>Area:</strong> ' + escapeHtml(area) + '</p>' : '') +
+                        '<p class="small mb-1"><strong>Dates:</strong> ' + escapeHtml(puja.dates) + '</p>' +
+                        distLine +
+                        '<p class="small mb-2"><strong>Address:</strong> ' +
+                            '<a class="link-festive" href="' + getMapsUrl(puja.address) + '" target="_blank" rel="noopener noreferrer">' +
+                                '<i class="fas fa-map-marker-alt text-danger" aria-hidden="true"></i> ' + escapeHtml(puja.address) +
+                            '</a>' +
+                        '</p>' +
+                        linkButton(puja, 'btn-sm btn-festive') +
+                    '</article>'
+                );
+            }).join('');
+
+            pujaCards.querySelectorAll('[data-plan-id]').forEach((el) => {
+                el.addEventListener('change', () => toggleSelection(Number(el.getAttribute('data-plan-id')), el.checked));
+            });
+        }
+
+        function toggleSelection(pujaId, shouldSelect) {
+            const idx = pujaPlan.selectedIds.indexOf(pujaId);
+            if (shouldSelect === true && idx === -1) {
+                pujaPlan.selectedIds.push(pujaId);
+            } else if (shouldSelect === false && idx !== -1) {
+                pujaPlan.selectedIds.splice(idx, 1);
+            } else if (shouldSelect === undefined) {
+                if (idx === -1) pujaPlan.selectedIds.push(pujaId);
+                else pujaPlan.selectedIds.splice(idx, 1);
+            }
+            applyFilterAndSort();
+            renderPlan();
+        }
+
+        function removeFromPlan(pujaId) {
+            toggleSelection(pujaId, false);
+        }
+
+        function movePlanItem(pujaId, direction) {
+            const i = pujaPlan.selectedIds.indexOf(pujaId);
+            const j = i + direction;
+            if (i < 0 || j < 0 || j >= pujaPlan.selectedIds.length) return;
+            const tmp = pujaPlan.selectedIds[i];
+            pujaPlan.selectedIds[i] = pujaPlan.selectedIds[j];
+            pujaPlan.selectedIds[j] = tmp;
+            renderPlan();
+        }
+
+        function clearPlan() {
+            pujaPlan.selectedIds = [];
+            applyFilterAndSort();
+            renderPlan();
+        }
+
+        function getSelectedPujas() {
+            return pujaPlan.selectedIds
+                .map((id) => pujaData.find((p) => p.id === id))
+                .filter(Boolean);
+        }
+
+        function renderPlan() {
+            const chosen = getSelectedPujas();
+            itineraryCount.textContent = String(chosen.length);
+
+            if (!chosen.length) {
+                itineraryList.innerHTML = '<div class="empty-pill p-4 text-center"><p class="mb-1 fw-semibold">Your plan is empty</p><p class="small text-muted mb-0">Check Add to Plan on any puja to build your list.</p></div>';
+                sidebarActions.classList.add('d-none');
+                shareEmptyHint.classList.remove('d-none');
+                return;
+            }
+
+            const closestId = getClosestPujaId(filteredPujas);
+            itineraryList.innerHTML = chosen.map((puja, index) => {
+                const dKm = getPujaDistanceKm(puja);
+                const distLine = dKm != null
+                    ? '<p class="small mb-1"><strong>Distance:</strong> ' + formatKm(dKm) + closestBadge(puja.id, closestId) + '</p>'
+                    : '';
+                return (
+                    '<div class="itinerary-item">' +
+                        '<div class="d-flex justify-content-between align-items-start gap-2">' +
+                            '<h6>' + (index + 1) + '. ' + escapeHtml(puja.name) + closestBadge(puja.id, closestId) + '</h6>' +
+                            '<div class="btn-group btn-group-sm" role="group" aria-label="Reorder ' + escapeHtml(puja.name) + '">' +
+                                '<button type="button" class="btn btn-outline-secondary" data-move="' + puja.id + '" data-dir="-1" aria-label="Move up"' + (index === 0 ? ' disabled' : '') + '><i class="fas fa-arrow-up" aria-hidden="true"></i></button>' +
+                                '<button type="button" class="btn btn-outline-secondary" data-move="' + puja.id + '" data-dir="1" aria-label="Move down"' + (index === chosen.length - 1 ? ' disabled' : '') + '><i class="fas fa-arrow-down" aria-hidden="true"></i></button>' +
+                            '</div>' +
+                        '</div>' +
+                        '<p class="small mb-1"><strong>Dates:</strong> ' + escapeHtml(puja.dates) + '</p>' +
+                        '<p class="small mb-1"><strong>Location:</strong> ' + escapeHtml(puja.address) + '</p>' +
+                        distLine +
+                        '<button type="button" class="btn btn-sm btn-outline-danger mt-1" data-remove="' + puja.id + '">' +
+                            '<i class="fas fa-times" aria-hidden="true"></i> Remove' +
+                        '</button>' +
+                    '</div>'
+                );
+            }).join('');
+
+            itineraryList.querySelectorAll('[data-remove]').forEach((btn) => {
+                btn.addEventListener('click', () => removeFromPlan(Number(btn.getAttribute('data-remove'))));
+            });
+            itineraryList.querySelectorAll('[data-move]').forEach((btn) => {
+                btn.addEventListener('click', () => movePlanItem(Number(btn.getAttribute('data-move')), Number(btn.getAttribute('data-dir'))));
+            });
+
+            sidebarActions.classList.remove('d-none');
+            shareEmptyHint.classList.add('d-none');
+        }
+
+        function generatePlanText() {
+            const chosen = getSelectedPujas();
+            if (!chosen.length) return '';
+            const blocks = chosen.map((puja, i) => {
+                let line = (i + 1) + '. ' + puja.name + '\n';
+                line += '   Dates: ' + puja.dates + '\n';
+                line += '   Location: ' + puja.address + '\n';
+                if (puja.facebook) {
+                    line += '   ' + (isFacebookLink(puja.facebook) ? 'Facebook' : 'Website') + ': ' + getLinkUrl(puja.facebook) + '\n';
+                }
+                return line;
+            });
+            return 'My Durga Puja 2026 Plan\n\n' +
+                blocks.join('\n') +
+                '\nHappy Durga Puja!\n' +
+                window.location.href;
+        }
+
+        function shareToWhatsApp() {
+            const text = generatePlanText();
+            if (!text) return;
+            window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener,noreferrer');
+        }
+
+        function shareToEmail() {
+            const text = generatePlanText();
+            if (!text) return;
+            const subject = 'My Durga Puja 2026 Plan';
+            window.location.href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(text);
+        }
+
+        function copyPlanText() {
+            const text = generatePlanText();
+            if (!text) return;
+            const btn = document.getElementById('copyText');
+            const original = btn.innerHTML;
+            const showCopied = () => {
+                btn.innerHTML = '<i class="fas fa-check me-1" aria-hidden="true"></i> Copied!';
+                setTimeout(() => { btn.innerHTML = original; }, 1800);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(showCopied).catch(fallbackCopy);
+            } else {
+                fallbackCopy();
+            }
+            function fallbackCopy() {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.setAttribute('readonly', '');
+                ta.style.position = 'absolute';
+                ta.style.left = '-9999px';
+                document.body.appendChild(ta);
+                ta.select();
+                try {
+                    document.execCommand('copy');
+                    showCopied();
+                } catch (err) {
+                    alert('Could not copy automatically. You can still use Email Share or WhatsApp Share.');
+                }
+                document.body.removeChild(ta);
+            }
+        }
+
+        function openSidebar() {
+            itinerarySidebar.classList.add('open');
+            sidebarOverlay.classList.add('show');
+            sidebarOverlay.setAttribute('aria-hidden', 'false');
+            closeSidebar.focus();
+        }
+
+        function closeItinerarySidebar() {
+            itinerarySidebar.classList.remove('open');
+            sidebarOverlay.classList.remove('show');
+            sidebarOverlay.setAttribute('aria-hidden', 'true');
         }
 
         function getMarkerColor(address) {
-            const addressLower = address.toLowerCase();
-            
-            // Color coding by region
-            if (addressLower.includes('toronto') || addressLower.includes('scarborough') || 
-                addressLower.includes('north york') || addressLower.includes('etobicoke') || 
+            const addressLower = (address || '').toLowerCase();
+            if (addressLower.includes('toronto') || addressLower.includes('scarborough') ||
+                addressLower.includes('north york') || addressLower.includes('etobicoke') ||
                 addressLower.includes('york') || addressLower.includes('east york')) {
-                return '#d32f2f'; // Red for Toronto area
-            } else if (addressLower.includes('mississauga') || addressLower.includes('brampton') || 
-                       addressLower.includes('oakville') || addressLower.includes('burlington')) {
-                return '#1976d2'; // Blue for Peel/Halton region
-            } else if (addressLower.includes('markham') || addressLower.includes('richmond hill') || 
-                       addressLower.includes('vaughan')) {
-                return '#388e3c'; // Green for York region
-            } else if (addressLower.includes('ajax') || addressLower.includes('pickering') || 
-                       addressLower.includes('whitby') || addressLower.includes('oshawa')) {
-                return '#f57c00'; // Orange for Durham region
-            } else if (addressLower.includes('waterloo') || addressLower.includes('guelph')) {
-                return '#7b1fa2'; // Purple for Waterloo region
-            } else if (addressLower.includes('london')) {
-                return '#5d4037'; // Brown for London
-            } else if (addressLower.includes('hamilton')) {
-                return '#455a64'; // Blue-grey for Hamilton
-            } else if (addressLower.includes('niagara')) {
-                return '#e91e63'; // Pink for Niagara
-            } else {
-                return '#d32f2f'; // Default red
+                return '#d32f2f';
             }
+            if (addressLower.includes('mississauga') || addressLower.includes('brampton') ||
+                addressLower.includes('oakville') || addressLower.includes('burlington')) {
+                return '#1976d2';
+            }
+            if (addressLower.includes('markham') || addressLower.includes('richmond hill') ||
+                addressLower.includes('vaughan')) {
+                return '#388e3c';
+            }
+            if (addressLower.includes('ajax') || addressLower.includes('pickering') ||
+                addressLower.includes('whitby') || addressLower.includes('oshawa')) {
+                return '#f57c00';
+            }
+            if (addressLower.includes('waterloo') || addressLower.includes('guelph') ||
+                addressLower.includes('kitchener') || addressLower.includes('puslinch')) {
+                return '#7b1fa2';
+            }
+            if (addressLower.includes('london')) return '#5d4037';
+            if (addressLower.includes('hamilton')) return '#455a64';
+            if (addressLower.includes('niagara')) return '#e91e63';
+            return '#d32f2f';
         }
 
         function createPopupContent(puja) {
-            const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(puja.address)}`;
-            const linkType = puja.facebook.includes('facebook.com') ? 'Facebook' : 'Website';
-            const linkIcon = puja.facebook.includes('facebook.com') ? 'fab fa-facebook' : 'fas fa-globe';
-            const linkClass = puja.facebook.includes('facebook.com') ? 'btn-facebook' : 'btn-website';
-
-            return `
-                <div class="popup-content">
-                    <div class="popup-title">${puja.name}</div>
-                    <div class="popup-details">
-                        <p><strong>📅 Dates:</strong> ${puja.dates}</p>
-                        <p><strong>📍 Address:</strong> ${puja.address}</p>
-                    </div>
-                    <div class="popup-actions">
-                        <a href="${googleMapsUrl}" target="_blank" class="popup-btn btn-directions">
-                            <i class="fas fa-directions"></i> Directions
-                        </a>
-                        ${puja.facebook ? `
-                            <a href="${puja.facebook}" target="_blank" class="popup-btn ${linkClass}">
-                                <i class="${linkIcon}"></i> ${linkType}
-                            </a>
-                        ` : ''}
-                    </div>
-                </div>
-            `;
+            const dKm = getPujaDistanceKm(puja);
+            const distHtml = dKm != null
+                ? '<p><strong>Distance:</strong> ' + formatKm(dKm) + '</p>'
+                : '';
+            const linkType = isFacebookLink(puja.facebook) ? 'Facebook' : 'Website';
+            const linkIcon = isFacebookLink(puja.facebook) ? 'fab fa-facebook' : 'fas fa-globe';
+            const linkClass = isFacebookLink(puja.facebook) ? 'btn-facebook' : 'btn-website';
+            return (
+                '<div class="popup-content">' +
+                    '<div class="popup-title">' + escapeHtml(puja.name) + '</div>' +
+                    '<div class="popup-details">' +
+                        '<p><strong>Dates:</strong> ' + escapeHtml(puja.dates) + '</p>' +
+                        '<p><strong>Address:</strong> ' + escapeHtml(puja.address) + '</p>' +
+                        distHtml +
+                    '</div>' +
+                    '<div class="popup-actions">' +
+                        '<a href="' + getMapsUrl(puja.address) + '" target="_blank" rel="noopener noreferrer" class="popup-btn btn-directions">' +
+                            '<i class="fas fa-directions" aria-hidden="true"></i> Directions</a>' +
+                        (puja.facebook
+                            ? '<a href="' + escapeHtml(getLinkUrl(puja.facebook)) + '" target="_blank" rel="noopener noreferrer" class="popup-btn ' + linkClass + '">' +
+                                '<i class="' + linkIcon + '" aria-hidden="true"></i> ' + linkType + '</a>'
+                            : '') +
+                    '</div>' +
+                '</div>'
+            );
         }
 
-        // ===== RESPONSIVE BEHAVIOR =====
-        window.addEventListener('resize', function() {
-            // Handle responsive behavior if needed
+        function initializeMap() {
+            if (pujaMap) return;
+            pujaMap = L.map('pujaMap').setView([43.6532, -79.3832], 9);
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }).addTo(pujaMap);
+            markerLayer = L.layerGroup().addTo(pujaMap);
+            renderMapMarkers();
+            setTimeout(() => pujaMap.invalidateSize(), 300);
+        }
+
+        function renderMapMarkers() {
+            if (!pujaMap || !markerLayer) return;
+            markerLayer.clearLayers();
+            const bounds = [];
+
+            filteredPujas.forEach((puja, index) => {
+                const coords = getPujaCoords(puja);
+                if (!coords) return;
+                const markerColor = getMarkerColor(puja.address);
+                const marker = L.marker([coords.lat, coords.lng], {
+                    icon: L.divIcon({
+                        className: 'custom-marker-wrap',
+                        html: '<div class="custom-marker" style="background-color: ' + markerColor + ';">' + (index + 1) + '</div>',
+                        iconSize: [30, 30],
+                        iconAnchor: [15, 15]
+                    })
+                });
+                marker.bindPopup(createPopupContent(puja));
+                marker.addTo(markerLayer);
+                bounds.push([coords.lat, coords.lng]);
+            });
+
+            if (userMarker) {
+                userMarker.addTo(markerLayer);
+                bounds.push([userLocation.lat, userLocation.lng]);
+            }
+
+            if (bounds.length === 1) {
+                pujaMap.setView(bounds[0], 12);
+            } else if (bounds.length > 1 && !userLocation) {
+                pujaMap.fitBounds(bounds, { padding: [28, 28] });
+            }
+        }
+
+        function assignCoords(puja, lat, lng) {
+            puja.lat = lat;
+            puja.lng = lng;
+            coordCache[puja.address] = { lat: lat, lng: lng };
+        }
+
+        function getFallbackCoordCity(puja) {
+            const fromAddress = findCityInAddress(puja.address);
+            if (fromAddress && gtaCoordinates[fromAddress]) return fromAddress;
+            const fromArea = findCityInAddress(puja.area || '');
+            if (fromArea && gtaCoordinates[fromArea]) return fromArea;
+            return '';
+        }
+
+        function geocodeWithNominatim(puja, done) {
+            const query = [puja.address, puja.area, 'Ontario, Canada'].filter(Boolean).join(', ');
+            const url = 'https://nominatim.openstreetmap.org/search?format=json&q=' +
+                encodeURIComponent(query) + '&limit=1';
+            fetch(url)
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data && data.length > 0) {
+                        const lat = parseFloat(data[0].lat);
+                        const lng = parseFloat(data[0].lon);
+                        if (!isNaN(lat) && !isNaN(lng)) {
+                            assignCoords(puja, lat, lng);
+                            done();
+                            return;
+                        }
+                    }
+                    const fallbackCity = getFallbackCoordCity(puja);
+                    if (fallbackCity) {
+                        assignCoords(puja, gtaCoordinates[fallbackCity][0], gtaCoordinates[fallbackCity][1]);
+                    }
+                    done();
+                })
+                .catch(() => {
+                    const fallbackCity = getFallbackCoordCity(puja);
+                    if (fallbackCity && !getPujaCoords(puja)) {
+                        assignCoords(puja, gtaCoordinates[fallbackCity][0], gtaCoordinates[fallbackCity][1]);
+                    }
+                    done();
+                });
+        }
+
+        function resolvePujaCoords(puja, done) {
+            if (getPujaCoords(puja)) {
+                done();
+                return;
+            }
+            geocodeWithNominatim(puja, done);
+        }
+
+        function geocodeAllPujas() {
+            const pending = pujaData.filter((puja) => !getPujaCoords(puja));
+            let index = 0;
+
+            function step() {
+                if (index >= pending.length) {
+                    renderMapMarkers();
+                    if (userLocation) applyFilterAndSort();
+                    return;
+                }
+                const puja = pending[index++];
+                resolvePujaCoords(puja, () => {
+                    renderMapMarkers();
+                    if (userLocation) applyFilterAndSort();
+                    setTimeout(step, 1100);
+                });
+            }
+
+            step();
+        }
+
+        function useMyLocation() {
+            geoMessage.textContent = '';
+            if (!navigator.geolocation) {
+                geoMessage.textContent = 'Your browser doesn’t support location services. You can still browse all pujas and the map.';
+                return;
+            }
+            geoMessage.textContent = 'Requesting your location…';
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
+                    if (!pujaMap) initializeMap();
+                    if (userMarker) {
+                        markerLayer.removeLayer(userMarker);
+                        userMarker = null;
+                    }
+                    userMarker = L.circleMarker([userLocation.lat, userLocation.lng], {
+                        radius: 10,
+                        color: '#b71c1c',
+                        fillColor: '#d32f2f',
+                        fillOpacity: 0.85
+                    }).bindPopup('<strong>You are here</strong>');
+                    geoMessage.textContent = 'Location found — the list is now sorted by distance. The Closest badge marks the nearest puja.';
+                    sortSelect.value = 'distance';
+                    applyFilterAndSort();
+                    renderPlan();
+                    pujaMap.setView([userLocation.lat, userLocation.lng], 11);
+                },
+                (err) => {
+                    if (err && err.code === 1) {
+                        geoMessage.textContent = 'Location permission was denied. You can still search, sort, and plan visits without distance.';
+                    } else {
+                        geoMessage.textContent = 'We couldn’t read your location. You can still explore every puja without distance sorting.';
+                    }
+                },
+                { enableHighAccuracy: true, timeout: 12000, maximumAge: 0 }
+            );
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            searchInput.addEventListener('input', applyFilterAndSort);
+            sortSelect.addEventListener('change', applyFilterAndSort);
+            document.getElementById('btnUseLocation').addEventListener('click', useMyLocation);
+            document.getElementById('btnUseLocationMap').addEventListener('click', useMyLocation);
+            itineraryBtn.addEventListener('click', openSidebar);
+            closeSidebar.addEventListener('click', closeItinerarySidebar);
+            sidebarOverlay.addEventListener('click', closeItinerarySidebar);
+            document.getElementById('shareWhatsApp').addEventListener('click', shareToWhatsApp);
+            document.getElementById('shareEmail').addEventListener('click', shareToEmail);
+            document.getElementById('copyText').addEventListener('click', copyPlanText);
+            document.getElementById('clearPlan').addEventListener('click', clearPlan);
+            document.addEventListener('keydown', function (e) {
+                if (e.key === 'Escape') closeItinerarySidebar();
+            });
+
+            renderPlan();
+            applyFilterAndSort();
+            initializeMap();
+            geocodeAllPujas();
+        });
+
+        window.addEventListener('resize', function () {
             if (pujaMap) {
-                setTimeout(() => {
-                    pujaMap.invalidateSize();
-                }, 100);
+                setTimeout(() => pujaMap.invalidateSize(), 100);
             }
         });
     </script>
