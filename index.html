@@ -641,7 +641,7 @@
             </div>
             <p class="small text-muted mt-3 mb-0">
                 <i class="fas fa-info-circle" aria-hidden="true"></i>
-                Found <span id="resultCount">21</span> pujas
+                Found <span id="resultCount">23</span> pujas
             </p>
         </section>
 
@@ -959,6 +959,25 @@
                 facebook: "https://www.facebook.com/profile.php?id=100094011860205",
                 lat: 43.1342251,
                 lng: -79.0940241
+            },
+            {
+                id: 22,
+                name: "TSF - TriCity Sankalpa Foundation",
+                dates: "16th - 18th Oct",
+                address: "Conestoga Banquet Hall, 617 King St N, Waterloo, ON N2V 2N3",
+                facebook: "https://www.facebook.com/ourtsforg",
+                lat: 43.504794,
+                lng: -80.537085
+            },
+            {
+                id: 23,
+                name: "Simcoe Utsav Foundation",
+                dates: "24th - 25th Oct",
+                address: "Bond Head Community Memorial Centre, 2892 Simcoe County Rd 27, Bond Head ON L0G 1B0",
+                area: "Bond Head",
+                facebook: "https://www.facebook.com/share/18DDMaM51C/",
+                lat: 44.0873837,
+                lng: -79.6758611
             }
         ];
 
@@ -991,7 +1010,7 @@
 
         // Area labels parsed from addresses (including 2026 cities not in the coord table).
         // Do not invent map coordinates for these — Nominatim can resolve them later.
-        const extraAreaNames = ['Puslinch'];
+        const extraAreaNames = ['Puslinch', 'Bond Head'];
 
         /**
          * Planning state — kept simple and extensible for later extras
