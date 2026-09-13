@@ -1101,9 +1101,11 @@
         }
 
         function getStopQuery(puja) {
+            const named = [puja.name, puja.address].filter(Boolean).join(', ');
+            if (named) return named;
             const coords = getPujaCoords(puja);
             if (coords) return coords.lat + ',' + coords.lng;
-            return puja.address || '';
+            return '';
         }
 
         function getLegDistanceKm(fromPuja, toPuja) {
