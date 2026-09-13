@@ -321,6 +321,25 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
+        .custom-marker.is-route-stop {
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.7), 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .custom-marker.is-dimmed {
+            opacity: 0.32;
+            transform: scale(0.78);
+            filter: grayscale(0.35);
+        }
+
+        .route-leg {
+            margin: 0 0 0.85rem;
+            padding: 0.4rem 0.7rem;
+            border-left: 3px dashed var(--gold);
+            color: var(--text-dark);
+            font-size: 0.82rem;
+            font-weight: 600;
+        }
+
         .leaflet-popup-content-wrapper {
             border-radius: 10px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
@@ -529,6 +548,8 @@
 
         .share-btn.whatsapp { background: #25d366; color: white; }
         .share-btn.email { background: var(--primary-red); color: white; }
+        .share-btn.maps { background: #1a73e8; color: white; }
+        .share-btn.maps:hover { color: white; }
 
         /* ===== FOOTER ===== */
         .footer {
@@ -674,6 +695,7 @@
                 </div>
                 <p id="geoMessage" class="map-note mt-2 mb-0" role="status"></p>
                 <p id="locationStatusLine" class="map-note mt-1 mb-0" aria-live="polite"></p>
+                <p id="routeStatusLine" class="map-note mt-1 mb-0" aria-live="polite"></p>
                 <p class="map-note mt-1 mb-0">
                     Location is requested only when you tap Find Nearby Puja. On a live site, geolocation may require <strong>HTTPS</strong>.
                 </p>
@@ -721,6 +743,10 @@
         <div class="sidebar-body">
             <div id="itineraryList" class="itinerary-list"></div>
             <div class="sidebar-actions" id="sidebarActions">
+                <button type="button" class="btn share-btn maps w-100 mb-2 d-none" id="openRouteMaps">
+                    <i class="fas fa-route me-1" aria-hidden="true"></i> Open route in Google Maps
+                </button>
+                <p id="routeMapsHint" class="small text-muted mb-3 d-none">Starts from your current location, then follows your puja order.</p>
                 <h5 class="h6 text-uppercase text-muted mb-2">Share Your Plan</h5>
                 <button type="button" class="btn share-btn whatsapp w-100 mb-2" id="shareWhatsApp">
                     <i class="fab fa-whatsapp me-1" aria-hidden="true"></i> WhatsApp Share
@@ -1048,6 +1074,9 @@
         const shareEmptyHint = document.getElementById('shareEmptyHint');
         const geoMessage = document.getElementById('geoMessage');
         const locationStatusLine = document.getElementById('locationStatusLine');
+        const routeStatusLine = document.getElementById('routeStatusLine');
+        const openRouteMaps = document.getElementById('openRouteMaps');
+        const routeMapsHint = document.getElementById('routeMapsHint');
 
         function escapeHtml(value) {
             return String(value)
@@ -1069,6 +1098,49 @@
 
         function getMapsUrl(address) {
             return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(address);
+        }
+
+        function getStopQuery(puja) {
+            const coords = getPujaCoords(puja);
+            if (coords) return coords.lat + ',' + coords.lng;
+            return puja.address || '';
+        }
+
+        function getLegDistanceKm(fromPuja, toPuja) {
+            const from = getPujaCoords(fromPuja);
+            const to = getPujaCoords(toPuja);
+            if (!from || !to) return null;
+            return calculateDistanceKm(from.lat, from.lng, to.lat, to.lng);
+        }
+
+        function formatDriveLeg(fromPuja, toPuja) {
+            const km = getLegDistanceKm(fromPuja, toPuja);
+            if (km == null) return 'Drive → next stop';
+            return 'Drive → about ' + formatKm(km);
+        }
+
+        function getGoogleRouteUrl(pujas) {
+            if (!pujas || !pujas.length) return '';
+            const destination = getStopQuery(pujas[pujas.length - 1]);
+            if (!destination) return '';
+            let url = 'https://www.google.com/maps/dir/?api=1&travelmode=driving' +
+                '&destination=' + encodeURIComponent(destination);
+            if (userLocation) {
+                url += '&origin=' + encodeURIComponent(userLocation.lat + ',' + userLocation.lng);
+            }
+            const waypoints = pujas.slice(0, -1).map(getStopQuery).filter(Boolean);
+            if (waypoints.length) {
+                url += '&waypoints=' + encodeURIComponent(waypoints.join('|'));
+            }
+            return url;
+        }
+
+        function formatDriveFromYou(puja) {
+            if (!userLocation) return 'Drive from your location → first stop';
+            const coords = getPujaCoords(puja);
+            if (!coords) return 'Drive from your location → first stop';
+            const km = calculateDistanceKm(userLocation.lat, userLocation.lng, coords.lat, coords.lng);
+            return 'Drive from your location → about ' + formatKm(km);
         }
 
         function findCityInAddress(address) {
@@ -1386,14 +1458,23 @@
                 itineraryList.innerHTML = '<div class="empty-pill p-4 text-center"><p class="mb-1 fw-semibold">Your plan is empty</p><p class="small text-muted mb-0">Check Add to Plan on any puja to build your list.</p></div>';
                 sidebarActions.classList.add('d-none');
                 shareEmptyHint.classList.remove('d-none');
+                openRouteMaps.classList.add('d-none');
+                routeMapsHint.classList.add('d-none');
+                renderMapMarkers();
                 return;
             }
 
             const closestId = getClosestPujaId(filteredPujas);
-            itineraryList.innerHTML = chosen.map((puja, index) => {
+            const fromYouLeg = '<p class="route-leg"><i class="fas fa-location-arrow me-1" aria-hidden="true"></i> ' +
+                escapeHtml(formatDriveFromYou(chosen[0])) + '</p>';
+            itineraryList.innerHTML = fromYouLeg + chosen.map((puja, index) => {
                 const dKm = getPujaDistanceKm(puja);
                 const distLine = dKm != null
                     ? '<p class="small mb-1"><strong>Distance:</strong> ' + formatKm(dKm) + closestBadge(puja.id, closestId) + '</p>'
+                    : '';
+                const next = chosen[index + 1];
+                const driveLeg = next
+                    ? '<p class="route-leg"><i class="fas fa-car me-1" aria-hidden="true"></i> ' + escapeHtml(formatDriveLeg(puja, next)) + '</p>'
                     : '';
                 return (
                     '<div class="itinerary-item">' +
@@ -1410,7 +1491,8 @@
                         '<button type="button" class="btn btn-sm btn-outline-danger mt-1" data-remove="' + puja.id + '">' +
                             '<i class="fas fa-times" aria-hidden="true"></i> Remove' +
                         '</button>' +
-                    '</div>'
+                    '</div>' +
+                    driveLeg
                 );
             }).join('');
 
@@ -1423,6 +1505,9 @@
 
             sidebarActions.classList.remove('d-none');
             shareEmptyHint.classList.add('d-none');
+            openRouteMaps.classList.remove('d-none');
+            routeMapsHint.classList.remove('d-none');
+            renderMapMarkers();
         }
 
         function generatePlanText() {
@@ -1435,10 +1520,17 @@
                 if (puja.facebook) {
                     line += '   ' + (isFacebookLink(puja.facebook) ? 'Facebook' : 'Website') + ': ' + getLinkUrl(puja.facebook) + '\n';
                 }
+                if (chosen[i + 1]) {
+                    line += '   ' + formatDriveLeg(puja, chosen[i + 1]) + '\n';
+                }
                 return line;
             });
+            const routeUrl = getGoogleRouteUrl(chosen);
             return 'My Durga Puja 2026 Plan\n\n' +
+                'Start: your current location\n' +
+                formatDriveFromYou(chosen[0]) + '\n\n' +
                 blocks.join('\n') +
+                (routeUrl ? '\nOpen route: ' + routeUrl + '\n' : '') +
                 '\nHappy Durga Puja!\n' +
                 window.location.href;
         }
@@ -1573,15 +1665,24 @@
             if (!pujaMap || !markerLayer) return;
             markerLayer.clearLayers();
             const bounds = [];
+            const planIds = pujaPlan.selectedIds;
+            const routeMode = planIds.length >= 2;
+            const planBounds = [];
 
             filteredPujas.forEach((puja, index) => {
                 const coords = getPujaCoords(puja);
                 if (!coords) return;
+                const stopIndex = planIds.indexOf(puja.id);
+                const isRouteStop = routeMode && stopIndex !== -1;
+                const isDimmed = routeMode && stopIndex === -1;
                 const markerColor = getMarkerColor(puja.address);
+                const label = isRouteStop ? String(stopIndex + 1) : (isDimmed ? '' : String(index + 1));
+                const extraClass = isRouteStop ? ' is-route-stop' : (isDimmed ? ' is-dimmed' : '');
                 const marker = L.marker([coords.lat, coords.lng], {
+                    zIndexOffset: isRouteStop ? 400 + stopIndex : 0,
                     icon: L.divIcon({
                         className: 'custom-marker-wrap',
-                        html: '<div class="custom-marker" style="background-color: ' + markerColor + ';">' + (index + 1) + '</div>',
+                        html: '<div class="custom-marker' + extraClass + '" style="background-color: ' + markerColor + ';">' + label + '</div>',
                         iconSize: [30, 30],
                         iconAnchor: [15, 15]
                     })
@@ -1589,6 +1690,7 @@
                 marker.bindPopup(createPopupContent(puja));
                 marker.addTo(markerLayer);
                 bounds.push([coords.lat, coords.lng]);
+                if (isRouteStop) planBounds.push([coords.lat, coords.lng]);
             });
 
             if (userMarker) {
@@ -1596,10 +1698,17 @@
                 bounds.push([userLocation.lat, userLocation.lng]);
             }
 
-            if (bounds.length === 1) {
-                pujaMap.setView(bounds[0], 12);
-            } else if (bounds.length > 1 && !userLocation) {
-                pujaMap.fitBounds(bounds, { padding: [28, 28] });
+            if (routeStatusLine) {
+                routeStatusLine.textContent = routeMode
+                    ? 'Your puja plan is highlighted on the map. Other locations are dimmed. Distances between stops are estimates, not driving time.'
+                    : '';
+            }
+
+            const fitTo = routeMode && planBounds.length ? planBounds : bounds;
+            if (fitTo.length === 1) {
+                pujaMap.setView(fitTo[0], 12);
+            } else if (fitTo.length > 1 && (routeMode || !userLocation)) {
+                pujaMap.fitBounds(fitTo, { padding: [28, 28] });
             }
         }
 
@@ -1677,6 +1786,69 @@
             step();
         }
 
+        function applyUserCoords(lat, lng, options) {
+            options = options || {};
+            userLocation = { lat: lat, lng: lng };
+            if (!pujaMap) initializeMap();
+            if (userMarker && markerLayer) {
+                markerLayer.removeLayer(userMarker);
+                userMarker = null;
+            }
+            userMarker = L.circleMarker([lat, lng], {
+                radius: 10,
+                color: '#b71c1c',
+                fillColor: '#d32f2f',
+                fillOpacity: 0.85
+            }).bindPopup('<strong>You are here</strong>');
+            if (options.sortByDistance) {
+                sortSelect.value = 'distance';
+                geoMessage.textContent = 'Location found — the list is now sorted by distance. The Closest badge marks the nearest puja.';
+            }
+            applyFilterAndSort();
+            renderPlan();
+            if (options.centerMap && pujaMap) {
+                pujaMap.setView([lat, lng], 11);
+            }
+        }
+
+        function openMapsUrl(url) {
+            if (!url) return;
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+
+        function openRouteInGoogleMaps() {
+            const chosen = getSelectedPujas();
+            if (!chosen.length) return;
+
+            if (userLocation) {
+                openMapsUrl(getGoogleRouteUrl(chosen));
+                return;
+            }
+
+            if (!navigator.geolocation) {
+                openMapsUrl(getGoogleRouteUrl(chosen));
+                return;
+            }
+
+            const original = openRouteMaps.innerHTML;
+            openRouteMaps.disabled = true;
+            openRouteMaps.innerHTML = '<i class="fas fa-location-crosshairs me-1" aria-hidden="true"></i> Finding your location…';
+            navigator.geolocation.getCurrentPosition(
+                (pos) => {
+                    applyUserCoords(pos.coords.latitude, pos.coords.longitude, { sortByDistance: false, centerMap: false });
+                    openRouteMaps.disabled = false;
+                    openRouteMaps.innerHTML = original;
+                    openMapsUrl(getGoogleRouteUrl(getSelectedPujas()));
+                },
+                () => {
+                    openRouteMaps.disabled = false;
+                    openRouteMaps.innerHTML = original;
+                    openMapsUrl(getGoogleRouteUrl(chosen));
+                },
+                { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 }
+            );
+        }
+
         function useMyLocation() {
             geoMessage.textContent = '';
             if (!navigator.geolocation) {
@@ -1686,23 +1858,7 @@
             geoMessage.textContent = 'Requesting your location…';
             navigator.geolocation.getCurrentPosition(
                 (pos) => {
-                    userLocation = { lat: pos.coords.latitude, lng: pos.coords.longitude };
-                    if (!pujaMap) initializeMap();
-                    if (userMarker) {
-                        markerLayer.removeLayer(userMarker);
-                        userMarker = null;
-                    }
-                    userMarker = L.circleMarker([userLocation.lat, userLocation.lng], {
-                        radius: 10,
-                        color: '#b71c1c',
-                        fillColor: '#d32f2f',
-                        fillOpacity: 0.85
-                    }).bindPopup('<strong>You are here</strong>');
-                    geoMessage.textContent = 'Location found — the list is now sorted by distance. The Closest badge marks the nearest puja.';
-                    sortSelect.value = 'distance';
-                    applyFilterAndSort();
-                    renderPlan();
-                    pujaMap.setView([userLocation.lat, userLocation.lng], 11);
+                    applyUserCoords(pos.coords.latitude, pos.coords.longitude, { sortByDistance: true, centerMap: true });
                 },
                 (err) => {
                     if (err && err.code === 1) {
@@ -1723,6 +1879,7 @@
             itineraryBtn.addEventListener('click', openSidebar);
             closeSidebar.addEventListener('click', closeItinerarySidebar);
             sidebarOverlay.addEventListener('click', closeItinerarySidebar);
+            openRouteMaps.addEventListener('click', openRouteInGoogleMaps);
             document.getElementById('shareWhatsApp').addEventListener('click', shareToWhatsApp);
             document.getElementById('shareEmail').addEventListener('click', shareToEmail);
             document.getElementById('copyText').addEventListener('click', copyPlanText);
