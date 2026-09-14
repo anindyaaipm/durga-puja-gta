@@ -362,10 +362,6 @@
             font-weight: 600;
         }
 
-        .food-leg {
-            font-weight: 600;
-        }
-
         .leaflet-popup-content-wrapper {
             border-radius: 10px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
@@ -788,7 +784,6 @@
                         <i class="fas fa-route me-1" aria-hidden="true"></i> Open route in Google Maps
                     </button>
                     <p id="routeMapsHint" class="small text-muted mb-2"></p>
-                    <p class="small text-muted mb-2">Food along the route uses Google Maps search for now. Named restaurant picks come later.</p>
                     <h5 class="h6 text-uppercase text-muted mb-2">Share this day’s itinerary</h5>
                     <button type="button" class="btn share-btn whatsapp w-100 mb-2" id="shareItineraryWhatsApp">
                         <i class="fab fa-whatsapp me-1" aria-hidden="true"></i> WhatsApp itinerary
@@ -816,7 +811,7 @@
                     </button>
                 </div>
             </div>
-            <p id="shareEmptyHint" class="small text-muted mb-0">Filter by date, then Add to Plan. Same-day picks become an itinerary with route and food search.</p>
+            <p id="shareEmptyHint" class="small text-muted mb-0">Filter by date, then Add to Plan. Same-day picks become an itinerary with a Google Maps route.</p>
         </div>
     </aside>
 
@@ -1160,19 +1155,6 @@
 
         function getMapsUrl(address) {
             return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(address);
-        }
-
-        function getFoodAlongUrl(fromPuja, toPuja) {
-            const from = fromPuja ? getPujaCoords(fromPuja) : null;
-            const to = toPuja ? getPujaCoords(toPuja) : null;
-            if (from && to) {
-                const lat = (from.lat + to.lat) / 2;
-                const lng = (from.lng + to.lng) / 2;
-                return 'https://www.google.com/maps/search/' + encodeURIComponent('Bengali Indian food') +
-                    '/@' + lat + ',' + lng + ',13z';
-            }
-            const near = (fromPuja && (fromPuja.address || fromPuja.name)) || '';
-            return getMapsUrl('Bengali Indian food near ' + near);
         }
 
         function persistPlan() {
@@ -1695,7 +1677,7 @@
                 itineraryList.innerHTML = '<div class="empty-pill p-4 text-center">' +
                     '<p class="mb-2 fw-semibold">Your puja plan is empty</p>' +
                     '<p class="small text-muted mb-2">Use <strong>Show pujas on</strong> to pick a date, then tap <strong>Add to Plan</strong>.</p>' +
-                    '<p class="small text-muted mb-0">Same-day picks become an itinerary with route and a Bengali / Indian food search. Mixed days stay as a list you can share.</p>' +
+                    '<p class="small text-muted mb-0">Same-day picks become an itinerary with a Google Maps route. Mixed days stay as a list you can share.</p>' +
                     '</div>';
                 if (planUndo) {
                     sidebarActions.classList.remove('d-none');
@@ -1726,17 +1708,9 @@
                     : '';
                 const next = chosen[index + 1];
                 const nextOnItinerary = next && !mixedDays && itineraryIds.indexOf(next.id) !== -1;
-                const stopNum = itineraryIds.indexOf(puja.id) + 1;
-                const nextStopNum = next ? itineraryIds.indexOf(next.id) + 1 : 0;
                 const driveLeg = onItinerary && nextOnItinerary
-                    ? '<p class="route-leg"><i class="fas fa-car me-1" aria-hidden="true"></i> ' + escapeHtml(formatDriveLeg(puja, next)) + '</p>' +
-                        '<p class="route-leg food-leg"><a class="link-festive" href="' + escapeHtml(getFoodAlongUrl(puja, next)) + '" target="_blank" rel="noopener noreferrer">' +
-                        '<i class="fas fa-utensils me-1" aria-hidden="true"></i> Hungry? Bengali / Indian food between stop ' +
-                        stopNum + ' and ' + nextStopNum + '</a></p>'
-                    : (onItinerary && itineraryPujas.length === 1
-                        ? '<p class="route-leg food-leg"><a class="link-festive" href="' + escapeHtml(getFoodAlongUrl(puja, puja)) + '" target="_blank" rel="noopener noreferrer">' +
-                            '<i class="fas fa-utensils me-1" aria-hidden="true"></i> Hungry? Bengali / Indian food near this puja</a></p>'
-                        : '');
+                    ? '<p class="route-leg"><i class="fas fa-car me-1" aria-hidden="true"></i> ' + escapeHtml(formatDriveLeg(puja, next)) + '</p>'
+                    : '';
                 return (
                     '<div class="itinerary-item' + (mixedDays ? '' : (onItinerary ? '' : ' is-other-day')) + '">' +
                         '<div class="d-flex justify-content-between align-items-start gap-2">' +
@@ -1792,7 +1766,6 @@
             }
             if (nextPuja) {
                 line += '   ' + formatDriveLeg(puja, nextPuja) + '\n';
-                line += '   Food between stops: ' + getFoodAlongUrl(puja, nextPuja) + '\n';
             }
             return line;
         }
@@ -1816,16 +1789,11 @@
             if (!dayKey || !stops.length) return '';
             const blocks = stops.map((puja, i) => formatPujaShareBlock(puja, i, stops[i + 1]));
             const routeUrl = getGoogleRouteUrl(stops);
-            const foodNote = stops.length === 1
-                ? 'Food near this puja: ' + getFoodAlongUrl(stops[0], stops[0]) + '\n'
-                : '';
             return 'My Durga Puja 2026 itinerary — ' + formatDayLabel(dayKey) + '\n\n' +
                 'Start: your current location\n' +
                 formatDriveFromYou(stops[0]) + '\n\n' +
                 blocks.join('\n') +
                 (routeUrl ? '\nOpen route: ' + routeUrl + '\n' : '') +
-                foodNote +
-                'Named restaurant picks along the route will come later.\n' +
                 '\nHappy Durga Puja!\n' +
                 window.location.href;
         }
