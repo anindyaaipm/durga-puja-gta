@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Durga Puja 2026 Guide - GTA</title>
+    <script>
+        window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+    </script>
+    <script defer src="/_vercel/insights/script.js"></script>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -164,6 +168,24 @@
         .sort-select:focus {
             border-color: var(--primary-red);
             box-shadow: 0 0 0 0.2rem rgba(211, 47, 47, 0.25);
+        }
+
+        .plan-day-warning {
+            background: #fff3cd;
+            border: 1px solid #ffecb5;
+            border-left: 4px solid var(--gold);
+            border-radius: 10px;
+            padding: 0.75rem 0.9rem;
+            margin-bottom: 0.85rem;
+            font-size: 0.86rem;
+        }
+
+        .plan-day-ok {
+            background: var(--light-red);
+            border-radius: 10px;
+            padding: 0.65rem 0.9rem;
+            margin-bottom: 0.85rem;
+            font-size: 0.86rem;
         }
 
         .btn-festive {
@@ -337,6 +359,10 @@
             border-left: 3px dashed var(--gold);
             color: var(--text-dark);
             font-size: 0.82rem;
+            font-weight: 600;
+        }
+
+        .food-leg {
             font-weight: 600;
         }
 
@@ -550,6 +576,11 @@
         .share-btn.email { background: var(--primary-red); color: white; }
         .share-btn.maps { background: #1a73e8; color: white; }
         .share-btn.maps:hover { color: white; }
+        .share-btn.undo { background: #fff; color: var(--text-dark); border: 2px solid var(--light-red); }
+        .itinerary-item.is-other-day {
+            opacity: 0.72;
+            border-left-color: #adb5bd;
+        }
 
         /* ===== FOOTER ===== */
         .footer {
@@ -635,7 +666,7 @@
 
         <section class="search-section">
             <div class="row g-3 align-items-end">
-                <div class="col-12 col-lg-5">
+                <div class="col-12 col-lg-4">
                     <label for="searchInput" class="form-label fw-semibold mb-1">Search</label>
                     <div class="input-group">
                         <span class="input-group-text bg-festive" style="background: var(--light-red); border-radius: 25px 0 0 25px; border: 2px solid var(--light-red);">
@@ -645,7 +676,13 @@
                                placeholder="Search by puja name, location, or date..." autocomplete="off">
                     </div>
                 </div>
-                <div class="col-12 col-md-6 col-lg-4">
+                <div class="col-12 col-md-6 col-lg-3">
+                    <label for="dateFilter" class="form-label fw-semibold mb-1">Show pujas on</label>
+                    <select class="form-select sort-select" id="dateFilter">
+                        <option value="">All dates</option>
+                    </select>
+                </div>
+                <div class="col-12 col-md-6 col-lg-3">
                     <label for="sortSelect" class="form-label fw-semibold mb-1">Sort pujas</label>
                     <select class="form-select sort-select" id="sortSelect">
                         <option value="name">Name (A–Z)</option>
@@ -654,15 +691,15 @@
                         <option value="distance">Distance</option>
                     </select>
                 </div>
-                <div class="col-12 col-md-6 col-lg-3">
+                <div class="col-12 col-lg-2">
                     <button type="button" class="btn btn-festive btn-nearby w-100" id="btnUseLocation">
-                        <i class="fas fa-location-crosshairs me-1" aria-hidden="true"></i> Find Nearby Puja
+                        <i class="fas fa-location-crosshairs me-1" aria-hidden="true"></i> Find Nearby
                     </button>
                 </div>
             </div>
             <p class="small text-muted mt-3 mb-0">
                 <i class="fas fa-info-circle" aria-hidden="true"></i>
-                Found <span id="resultCount">23</span> pujas
+                Found <span id="resultCount">23</span> pujas<span id="dateFilterHint"></span>
             </p>
         </section>
 
@@ -743,25 +780,43 @@
         <div class="sidebar-body">
             <div id="itineraryList" class="itinerary-list"></div>
             <div class="sidebar-actions" id="sidebarActions">
-                <button type="button" class="btn share-btn maps w-100 mb-2 d-none" id="openRouteMaps">
-                    <i class="fas fa-route me-1" aria-hidden="true"></i> Open route in Google Maps
+                <button type="button" class="btn share-btn undo w-100 mb-2 d-none" id="undoPlanBtn">
+                    <i class="fas fa-undo me-1" aria-hidden="true"></i> Undo last change
                 </button>
-                <p id="routeMapsHint" class="small text-muted mb-3 d-none">Starts from your current location, then follows your puja order.</p>
-                <h5 class="h6 text-uppercase text-muted mb-2">Share Your Plan</h5>
-                <button type="button" class="btn share-btn whatsapp w-100 mb-2" id="shareWhatsApp">
-                    <i class="fab fa-whatsapp me-1" aria-hidden="true"></i> WhatsApp Share
-                </button>
-                <button type="button" class="btn share-btn email w-100 mb-2" id="shareEmail">
-                    <i class="fas fa-envelope me-1" aria-hidden="true"></i> Email Share
-                </button>
-                <button type="button" class="btn btn-outline-secondary share-btn w-100 mb-2" id="copyText">
-                    <i class="fas fa-copy me-1" aria-hidden="true"></i> Copy Text
-                </button>
-                <button type="button" class="btn btn-outline-danger share-btn w-100" id="clearPlan">
-                    <i class="fas fa-trash me-1" aria-hidden="true"></i> Clear Plan
-                </button>
+                <div id="itineraryShareBlock" class="d-none">
+                    <button type="button" class="btn share-btn maps w-100 mb-2" id="openRouteMaps">
+                        <i class="fas fa-route me-1" aria-hidden="true"></i> Open route in Google Maps
+                    </button>
+                    <p id="routeMapsHint" class="small text-muted mb-2"></p>
+                    <p class="small text-muted mb-2">Food along the route uses Google Maps search for now. Named restaurant picks come later.</p>
+                    <h5 class="h6 text-uppercase text-muted mb-2">Share this day’s itinerary</h5>
+                    <button type="button" class="btn share-btn whatsapp w-100 mb-2" id="shareItineraryWhatsApp">
+                        <i class="fab fa-whatsapp me-1" aria-hidden="true"></i> WhatsApp itinerary
+                    </button>
+                    <button type="button" class="btn share-btn email w-100 mb-2" id="shareItineraryEmail">
+                        <i class="fas fa-envelope me-1" aria-hidden="true"></i> Email itinerary
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary share-btn w-100 mb-3" id="copyItinerary">
+                        <i class="fas fa-copy me-1" aria-hidden="true"></i> Copy itinerary
+                    </button>
+                </div>
+                <div id="planShareBlock">
+                    <h5 class="h6 text-uppercase text-muted mb-2">Share full plan</h5>
+                    <button type="button" class="btn share-btn whatsapp w-100 mb-2" id="shareWhatsApp">
+                        <i class="fab fa-whatsapp me-1" aria-hidden="true"></i> WhatsApp Share
+                    </button>
+                    <button type="button" class="btn share-btn email w-100 mb-2" id="shareEmail">
+                        <i class="fas fa-envelope me-1" aria-hidden="true"></i> Email Share
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary share-btn w-100 mb-2" id="copyText">
+                        <i class="fas fa-copy me-1" aria-hidden="true"></i> Copy Text
+                    </button>
+                    <button type="button" class="btn btn-outline-danger share-btn w-100" id="clearPlan">
+                        <i class="fas fa-trash me-1" aria-hidden="true"></i> Clear Plan
+                    </button>
+                </div>
             </div>
-            <p id="shareEmptyHint" class="small text-muted mb-0">Select at least one puja to share your plan.</p>
+            <p id="shareEmptyHint" class="small text-muted mb-0">Filter by date, then Add to Plan. Same-day picks become an itinerary with route and food search.</p>
         </div>
     </aside>
 
@@ -1041,8 +1096,9 @@
         /**
          * Planning state — kept simple and extensible for later extras
          * (nearby restaurants, timed itinerary, live puja status).
-         * No APIs are called yet.
+         * Restaurant APIs are not called yet; food uses Google Maps search.
          */
+        const PLAN_STORAGE_KEY = 'durgaPujaPlanIds2026';
         const pujaPlan = {
             selectedIds: [],
             extras: {
@@ -1056,9 +1112,12 @@
         let markerLayer = null;
         let userMarker = null;
         let userLocation = null;
+        let planUndo = null;
         const coordCache = {};
 
         const searchInput = document.getElementById('searchInput');
+        const dateFilter = document.getElementById('dateFilter');
+        const dateFilterHint = document.getElementById('dateFilterHint');
         const sortSelect = document.getElementById('sortSelect');
         const resultCount = document.getElementById('resultCount');
         const featuredCarousel = document.getElementById('featuredCarousel');
@@ -1077,6 +1136,9 @@
         const routeStatusLine = document.getElementById('routeStatusLine');
         const openRouteMaps = document.getElementById('openRouteMaps');
         const routeMapsHint = document.getElementById('routeMapsHint');
+        const undoPlanBtn = document.getElementById('undoPlanBtn');
+        const itineraryShareBlock = document.getElementById('itineraryShareBlock');
+        const planShareBlock = document.getElementById('planShareBlock');
 
         function escapeHtml(value) {
             return String(value)
@@ -1098,6 +1160,39 @@
 
         function getMapsUrl(address) {
             return 'https://www.google.com/maps/search/?api=1&query=' + encodeURIComponent(address);
+        }
+
+        function getFoodAlongUrl(fromPuja, toPuja) {
+            const from = fromPuja ? getPujaCoords(fromPuja) : null;
+            const to = toPuja ? getPujaCoords(toPuja) : null;
+            if (from && to) {
+                const lat = (from.lat + to.lat) / 2;
+                const lng = (from.lng + to.lng) / 2;
+                return 'https://www.google.com/maps/search/' + encodeURIComponent('Bengali Indian food') +
+                    '/@' + lat + ',' + lng + ',13z';
+            }
+            const near = (fromPuja && (fromPuja.address || fromPuja.name)) || '';
+            return getMapsUrl('Bengali Indian food near ' + near);
+        }
+
+        function persistPlan() {
+            try {
+                localStorage.setItem(PLAN_STORAGE_KEY, JSON.stringify(pujaPlan.selectedIds));
+            } catch (err) {
+                /* ignore quota / private mode */
+            }
+        }
+
+        function loadSavedPlan() {
+            try {
+                const raw = localStorage.getItem(PLAN_STORAGE_KEY);
+                if (!raw) return;
+                const ids = JSON.parse(raw);
+                if (!Array.isArray(ids)) return;
+                pujaPlan.selectedIds = ids.filter((id) => pujaData.some((puja) => puja.id === id));
+            } catch (err) {
+                pujaPlan.selectedIds = [];
+            }
         }
 
         function getStopQuery(puja) {
@@ -1177,6 +1272,98 @@
             return 0;
         }
 
+        function parseDateDays(dateStr) {
+            const s = (dateStr || '').toLowerCase();
+            if (!hasConfirmedDates(s) || s.includes('tba')) return [];
+            let month = null;
+            if (s.includes('sep')) month = 8;
+            else if (s.includes('oct')) month = 9;
+            if (month == null) return [];
+            const days = [];
+            const matches = s.match(/\d+/g) || [];
+            matches.forEach((part) => {
+                const day = parseInt(part, 10);
+                if (day >= 1 && day <= 31) days.push(day);
+            });
+            if (!days.length) return [];
+            const start = days[0];
+            const end = days.length > 1 ? days[days.length - 1] : start;
+            const keys = [];
+            for (let day = start; day <= end; day++) {
+                const mm = String(month + 1).padStart(2, '0');
+                const dd = String(day).padStart(2, '0');
+                keys.push(PUJA_YEAR + '-' + mm + '-' + dd);
+            }
+            return keys;
+        }
+
+        function formatDayLabel(dayKey) {
+            const parts = dayKey.split('-').map(Number);
+            const dt = new Date(parts[0], parts[1] - 1, parts[2]);
+            return dt.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+        }
+
+        function getFestivalDays() {
+            const seen = {};
+            pujaData.forEach((puja) => {
+                parseDateDays(puja.dates).forEach((key) => { seen[key] = true; });
+            });
+            return Object.keys(seen).sort();
+        }
+
+        function populateDateFilter() {
+            const current = dateFilter.value;
+            dateFilter.innerHTML = '<option value="">All dates</option>' +
+                getFestivalDays().map((key) => {
+                    return '<option value="' + key + '">' + formatDayLabel(key) + '</option>';
+                }).join('');
+            if (current && Array.prototype.some.call(dateFilter.options, (opt) => opt.value === current)) {
+                dateFilter.value = current;
+            }
+        }
+
+        function intersectDayKeys(groups) {
+            if (!groups.length) return [];
+            return groups.reduce((acc, days) => acc.filter((key) => days.indexOf(key) !== -1));
+        }
+
+        function getSharedDays(pujas) {
+            return intersectDayKeys(pujas.map((puja) => parseDateDays(puja.dates)));
+        }
+
+        function isMixedDayPlan(pujas) {
+            return pujas.length >= 2 && getSharedDays(pujas).length === 0;
+        }
+
+        function getItineraryDayKey(pujas) {
+            if (!pujas.length || isMixedDayPlan(pujas)) return '';
+            const shared = getSharedDays(pujas);
+            const filterDay = dateFilter.value;
+            if (filterDay && shared.indexOf(filterDay) !== -1) return filterDay;
+            return shared[0] || '';
+        }
+
+        function getItineraryPujas(pujas, dayKey) {
+            if (!dayKey) return [];
+            return pujas.filter((puja) => parseDateDays(puja.dates).indexOf(dayKey) !== -1);
+        }
+
+        function getPlanWarningText(pujas) {
+            if (!isMixedDayPlan(pujas)) return '';
+            return 'WARNING: These pujas are on different days. This is a saved list, not a same-day outing.';
+        }
+
+        function getPlanDayNote(pujas) {
+            if (isMixedDayPlan(pujas)) {
+                return '<div class="plan-day-warning" role="status"><strong>Different days.</strong> Share the full plan (the warning is included). Remove other-day pujas to make a same-day itinerary.</div>';
+            }
+            const itineraryDay = getItineraryDayKey(pujas);
+            if (itineraryDay) {
+                return '<div class="plan-day-ok" role="status">Same-day itinerary: ' + escapeHtml(formatDayLabel(itineraryDay)) + '</div>';
+            }
+            return '';
+        }
+
         function calculateDistanceKm(lat1, lng1, lat2, lng2) {
             const R = 6371;
             const toRad = (deg) => (deg * Math.PI) / 180;
@@ -1237,8 +1424,14 @@
         }
 
         function updateLocationStatusLine() {
+            const GEO_FOUND = 'Location found — the list is now sorted by distance. The Closest badge marks the nearest puja.';
             if (userLocation) {
                 locationStatusLine.textContent = 'Distances shown from your current location.';
+                if (sortSelect.value === 'distance') {
+                    geoMessage.textContent = GEO_FOUND;
+                } else if (geoMessage.textContent === GEO_FOUND) {
+                    geoMessage.textContent = '';
+                }
             } else if (sortSelect.value === 'distance') {
                 locationStatusLine.textContent = 'Tap Find Nearby Puja to sort by distance.';
             } else {
@@ -1248,9 +1441,12 @@
 
         function applyFilterAndSort() {
             const q = searchInput.value.toLowerCase().trim();
+            const dayKey = dateFilter.value;
             filteredPujas = pujaData.filter((puja) => {
                 const blob = [puja.name, puja.address, puja.dates, getArea(puja)].join(' ').toLowerCase();
-                return blob.includes(q);
+                if (q && !blob.includes(q)) return false;
+                if (dayKey && parseDateDays(puja.dates).indexOf(dayKey) === -1) return false;
+                return true;
             });
 
             const mode = sortSelect.value;
@@ -1276,6 +1472,7 @@
             });
 
             resultCount.textContent = String(filteredPujas.length);
+            dateFilterHint.textContent = dayKey ? ' on ' + formatDayLabel(dayKey) : '';
             updateLocationStatusLine();
             renderFeaturedCarousel();
             renderTable();
@@ -1417,17 +1614,39 @@
             if (shouldSelect === true && idx === -1) {
                 pujaPlan.selectedIds.push(pujaId);
             } else if (shouldSelect === false && idx !== -1) {
+                planUndo = { type: 'remove', id: pujaId, index: idx };
                 pujaPlan.selectedIds.splice(idx, 1);
             } else if (shouldSelect === undefined) {
-                if (idx === -1) pujaPlan.selectedIds.push(pujaId);
-                else pujaPlan.selectedIds.splice(idx, 1);
+                if (idx === -1) {
+                    pujaPlan.selectedIds.push(pujaId);
+                } else {
+                    planUndo = { type: 'remove', id: pujaId, index: idx };
+                    pujaPlan.selectedIds.splice(idx, 1);
+                }
             }
             applyFilterAndSort();
             renderPlan();
+            persistPlan();
         }
 
         function removeFromPlan(pujaId) {
             toggleSelection(pujaId, false);
+        }
+
+        function undoPlanChange() {
+            if (!planUndo) return;
+            if (planUndo.type === 'remove') {
+                if (pujaPlan.selectedIds.indexOf(planUndo.id) === -1) {
+                    const insertAt = Math.min(planUndo.index, pujaPlan.selectedIds.length);
+                    pujaPlan.selectedIds.splice(insertAt, 0, planUndo.id);
+                }
+            } else if (planUndo.type === 'clear' && planUndo.ids) {
+                pujaPlan.selectedIds = planUndo.ids.slice();
+            }
+            planUndo = null;
+            applyFilterAndSort();
+            renderPlan();
+            persistPlan();
         }
 
         function movePlanItem(pujaId, direction) {
@@ -1438,12 +1657,17 @@
             pujaPlan.selectedIds[i] = pujaPlan.selectedIds[j];
             pujaPlan.selectedIds[j] = tmp;
             renderPlan();
+            persistPlan();
         }
 
         function clearPlan() {
+            if (pujaPlan.selectedIds.length) {
+                planUndo = { type: 'clear', ids: pujaPlan.selectedIds.slice() };
+            }
             pujaPlan.selectedIds = [];
             applyFilterAndSort();
             renderPlan();
+            persistPlan();
         }
 
         function getSelectedPujas() {
@@ -1452,34 +1676,69 @@
                 .filter(Boolean);
         }
 
+        function updateUndoButton() {
+            if (planUndo) {
+                undoPlanBtn.classList.remove('d-none');
+            } else {
+                undoPlanBtn.classList.add('d-none');
+            }
+        }
+
         function renderPlan() {
             const chosen = getSelectedPujas();
+            const itineraryDay = getItineraryDayKey(chosen);
+            const itineraryPujas = getItineraryPujas(chosen, itineraryDay);
+            const itineraryIds = itineraryPujas.map((puja) => puja.id);
             itineraryCount.textContent = String(chosen.length);
 
             if (!chosen.length) {
-                itineraryList.innerHTML = '<div class="empty-pill p-4 text-center"><p class="mb-1 fw-semibold">Your plan is empty</p><p class="small text-muted mb-0">Check Add to Plan on any puja to build your list.</p></div>';
-                sidebarActions.classList.add('d-none');
-                shareEmptyHint.classList.remove('d-none');
-                openRouteMaps.classList.add('d-none');
-                routeMapsHint.classList.add('d-none');
+                itineraryList.innerHTML = '<div class="empty-pill p-4 text-center">' +
+                    '<p class="mb-2 fw-semibold">Your puja plan is empty</p>' +
+                    '<p class="small text-muted mb-2">Use <strong>Show pujas on</strong> to pick a date, then tap <strong>Add to Plan</strong>.</p>' +
+                    '<p class="small text-muted mb-0">Same-day picks become an itinerary with route and a Bengali / Indian food search. Mixed days stay as a list you can share.</p>' +
+                    '</div>';
+                if (planUndo) {
+                    sidebarActions.classList.remove('d-none');
+                    shareEmptyHint.classList.add('d-none');
+                } else {
+                    sidebarActions.classList.add('d-none');
+                    shareEmptyHint.classList.remove('d-none');
+                }
+                itineraryShareBlock.classList.add('d-none');
+                planShareBlock.classList.add('d-none');
+                updateUndoButton();
                 renderMapMarkers();
                 return;
             }
 
+            const mixedDays = isMixedDayPlan(chosen);
             const closestId = getClosestPujaId(filteredPujas);
-            const fromYouLeg = '<p class="route-leg"><i class="fas fa-location-arrow me-1" aria-hidden="true"></i> ' +
-                escapeHtml(formatDriveFromYou(chosen[0])) + '</p>';
-            itineraryList.innerHTML = fromYouLeg + chosen.map((puja, index) => {
+            const firstItinerary = !mixedDays ? itineraryPujas[0] : null;
+            const fromYouLeg = firstItinerary
+                ? '<p class="route-leg"><i class="fas fa-location-arrow me-1" aria-hidden="true"></i> ' +
+                    escapeHtml(formatDriveFromYou(firstItinerary)) + '</p>'
+                : '';
+            itineraryList.innerHTML = getPlanDayNote(chosen) + fromYouLeg + chosen.map((puja, index) => {
+                const onItinerary = !mixedDays && itineraryIds.indexOf(puja.id) !== -1;
                 const dKm = getPujaDistanceKm(puja);
                 const distLine = dKm != null
                     ? '<p class="small mb-1"><strong>Distance:</strong> ' + formatKm(dKm) + closestBadge(puja.id, closestId) + '</p>'
                     : '';
                 const next = chosen[index + 1];
-                const driveLeg = next
-                    ? '<p class="route-leg"><i class="fas fa-car me-1" aria-hidden="true"></i> ' + escapeHtml(formatDriveLeg(puja, next)) + '</p>'
-                    : '';
+                const nextOnItinerary = next && !mixedDays && itineraryIds.indexOf(next.id) !== -1;
+                const stopNum = itineraryIds.indexOf(puja.id) + 1;
+                const nextStopNum = next ? itineraryIds.indexOf(next.id) + 1 : 0;
+                const driveLeg = onItinerary && nextOnItinerary
+                    ? '<p class="route-leg"><i class="fas fa-car me-1" aria-hidden="true"></i> ' + escapeHtml(formatDriveLeg(puja, next)) + '</p>' +
+                        '<p class="route-leg food-leg"><a class="link-festive" href="' + escapeHtml(getFoodAlongUrl(puja, next)) + '" target="_blank" rel="noopener noreferrer">' +
+                        '<i class="fas fa-utensils me-1" aria-hidden="true"></i> Hungry? Bengali / Indian food between stop ' +
+                        stopNum + ' and ' + nextStopNum + '</a></p>'
+                    : (onItinerary && itineraryPujas.length === 1
+                        ? '<p class="route-leg food-leg"><a class="link-festive" href="' + escapeHtml(getFoodAlongUrl(puja, puja)) + '" target="_blank" rel="noopener noreferrer">' +
+                            '<i class="fas fa-utensils me-1" aria-hidden="true"></i> Hungry? Bengali / Indian food near this puja</a></p>'
+                        : '');
                 return (
-                    '<div class="itinerary-item">' +
+                    '<div class="itinerary-item' + (mixedDays ? '' : (onItinerary ? '' : ' is-other-day')) + '">' +
                         '<div class="d-flex justify-content-between align-items-start gap-2">' +
                             '<h6>' + (index + 1) + '. ' + escapeHtml(puja.name) + closestBadge(puja.id, closestId) + '</h6>' +
                             '<div class="btn-group btn-group-sm" role="group" aria-label="Reorder ' + escapeHtml(puja.name) + '">' +
@@ -1507,32 +1766,66 @@
 
             sidebarActions.classList.remove('d-none');
             shareEmptyHint.classList.add('d-none');
-            openRouteMaps.classList.remove('d-none');
-            routeMapsHint.classList.remove('d-none');
+            if (mixedDays) {
+                planShareBlock.classList.remove('d-none');
+                itineraryShareBlock.classList.add('d-none');
+            } else {
+                planShareBlock.classList.add('d-none');
+                if (itineraryPujas.length) {
+                    itineraryShareBlock.classList.remove('d-none');
+                    routeMapsHint.textContent = 'Itinerary for ' + formatDayLabel(itineraryDay) +
+                        '. Starts from your current location, then follows that day’s puja order.';
+                } else {
+                    itineraryShareBlock.classList.add('d-none');
+                }
+            }
+            updateUndoButton();
             renderMapMarkers();
+        }
+
+        function formatPujaShareBlock(puja, index, nextPuja) {
+            let line = (index + 1) + '. ' + puja.name + '\n';
+            line += '   Dates: ' + puja.dates + '\n';
+            line += '   Location: ' + puja.address + '\n';
+            if (puja.facebook) {
+                line += '   ' + (isFacebookLink(puja.facebook) ? 'Facebook' : 'Website') + ': ' + getLinkUrl(puja.facebook) + '\n';
+            }
+            if (nextPuja) {
+                line += '   ' + formatDriveLeg(puja, nextPuja) + '\n';
+                line += '   Food between stops: ' + getFoodAlongUrl(puja, nextPuja) + '\n';
+            }
+            return line;
         }
 
         function generatePlanText() {
             const chosen = getSelectedPujas();
             if (!chosen.length) return '';
-            const blocks = chosen.map((puja, i) => {
-                let line = (i + 1) + '. ' + puja.name + '\n';
-                line += '   Dates: ' + puja.dates + '\n';
-                line += '   Location: ' + puja.address + '\n';
-                if (puja.facebook) {
-                    line += '   ' + (isFacebookLink(puja.facebook) ? 'Facebook' : 'Website') + ': ' + getLinkUrl(puja.facebook) + '\n';
-                }
-                if (chosen[i + 1]) {
-                    line += '   ' + formatDriveLeg(puja, chosen[i + 1]) + '\n';
-                }
-                return line;
-            });
-            const routeUrl = getGoogleRouteUrl(chosen);
-            return 'My Durga Puja 2026 Plan\n\n' +
+            const warning = getPlanWarningText(chosen);
+            const blocks = chosen.map((puja, i) => formatPujaShareBlock(puja, i, null));
+            return (warning ? warning + '\n\n' : '') +
+                'My Durga Puja 2026 Plan\n\n' +
+                blocks.join('\n') +
+                '\nHappy Durga Puja!\n' +
+                window.location.href;
+        }
+
+        function generateItineraryText() {
+            const chosen = getSelectedPujas();
+            const dayKey = getItineraryDayKey(chosen);
+            const stops = getItineraryPujas(chosen, dayKey);
+            if (!dayKey || !stops.length) return '';
+            const blocks = stops.map((puja, i) => formatPujaShareBlock(puja, i, stops[i + 1]));
+            const routeUrl = getGoogleRouteUrl(stops);
+            const foodNote = stops.length === 1
+                ? 'Food near this puja: ' + getFoodAlongUrl(stops[0], stops[0]) + '\n'
+                : '';
+            return 'My Durga Puja 2026 itinerary — ' + formatDayLabel(dayKey) + '\n\n' +
                 'Start: your current location\n' +
-                formatDriveFromYou(chosen[0]) + '\n\n' +
+                formatDriveFromYou(stops[0]) + '\n\n' +
                 blocks.join('\n') +
                 (routeUrl ? '\nOpen route: ' + routeUrl + '\n' : '') +
+                foodNote +
+                'Named restaurant picks along the route will come later.\n' +
                 '\nHappy Durga Puja!\n' +
                 window.location.href;
         }
@@ -1550,10 +1843,23 @@
             window.location.href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(text);
         }
 
-        function copyPlanText() {
-            const text = generatePlanText();
+        function shareItineraryToWhatsApp() {
+            const text = generateItineraryText();
             if (!text) return;
-            const btn = document.getElementById('copyText');
+            window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank', 'noopener,noreferrer');
+        }
+
+        function shareItineraryToEmail() {
+            const text = generateItineraryText();
+            if (!text) return;
+            const chosen = getSelectedPujas();
+            const dayKey = getItineraryDayKey(chosen);
+            const subject = 'My Durga Puja itinerary — ' + formatDayLabel(dayKey);
+            window.location.href = 'mailto:?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(text);
+        }
+
+        function copyTextWithFeedback(text, btn) {
+            if (!text || !btn) return;
             const original = btn.innerHTML;
             const showCopied = () => {
                 btn.innerHTML = '<i class="fas fa-check me-1" aria-hidden="true"></i> Copied!';
@@ -1580,6 +1886,14 @@
                 }
                 document.body.removeChild(ta);
             }
+        }
+
+        function copyPlanText() {
+            copyTextWithFeedback(generatePlanText(), document.getElementById('copyText'));
+        }
+
+        function copyItineraryText() {
+            copyTextWithFeedback(generateItineraryText(), document.getElementById('copyItinerary'));
         }
 
         function openSidebar() {
@@ -1667,14 +1981,16 @@
             if (!pujaMap || !markerLayer) return;
             markerLayer.clearLayers();
             const bounds = [];
-            const planIds = pujaPlan.selectedIds;
-            const routeMode = planIds.length >= 2;
+            const chosen = getSelectedPujas();
+            const itineraryDay = getItineraryDayKey(chosen);
+            const itineraryIds = getItineraryPujas(chosen, itineraryDay).map((puja) => puja.id);
+            const routeMode = itineraryIds.length >= 2;
             const planBounds = [];
 
             filteredPujas.forEach((puja, index) => {
                 const coords = getPujaCoords(puja);
                 if (!coords) return;
-                const stopIndex = planIds.indexOf(puja.id);
+                const stopIndex = itineraryIds.indexOf(puja.id);
                 const isRouteStop = routeMode && stopIndex !== -1;
                 const isDimmed = routeMode && stopIndex === -1;
                 const markerColor = getMarkerColor(puja.address);
@@ -1702,7 +2018,7 @@
 
             if (routeStatusLine) {
                 routeStatusLine.textContent = routeMode
-                    ? 'Your puja plan is highlighted on the map. Other locations are dimmed. Distances between stops are estimates, not driving time.'
+                    ? 'This day’s itinerary is highlighted on the map. Other locations are dimmed. Distances between stops are estimates, not driving time.'
                     : '';
             }
 
@@ -1804,7 +2120,6 @@
             }).bindPopup('<strong>You are here</strong>');
             if (options.sortByDistance) {
                 sortSelect.value = 'distance';
-                geoMessage.textContent = 'Location found — the list is now sorted by distance. The Closest badge marks the nearest puja.';
             }
             applyFilterAndSort();
             renderPlan();
@@ -1820,15 +2135,17 @@
 
         function openRouteInGoogleMaps() {
             const chosen = getSelectedPujas();
-            if (!chosen.length) return;
+            const dayKey = getItineraryDayKey(chosen);
+            const stops = getItineraryPujas(chosen, dayKey);
+            if (!stops.length) return;
 
             if (userLocation) {
-                openMapsUrl(getGoogleRouteUrl(chosen));
+                openMapsUrl(getGoogleRouteUrl(stops));
                 return;
             }
 
             if (!navigator.geolocation) {
-                openMapsUrl(getGoogleRouteUrl(chosen));
+                openMapsUrl(getGoogleRouteUrl(stops));
                 return;
             }
 
@@ -1840,12 +2157,14 @@
                     applyUserCoords(pos.coords.latitude, pos.coords.longitude, { sortByDistance: false, centerMap: false });
                     openRouteMaps.disabled = false;
                     openRouteMaps.innerHTML = original;
-                    openMapsUrl(getGoogleRouteUrl(getSelectedPujas()));
+                    const refreshed = getSelectedPujas();
+                    const refreshedDay = getItineraryDayKey(refreshed);
+                    openMapsUrl(getGoogleRouteUrl(getItineraryPujas(refreshed, refreshedDay)));
                 },
                 () => {
                     openRouteMaps.disabled = false;
                     openRouteMaps.innerHTML = original;
-                    openMapsUrl(getGoogleRouteUrl(chosen));
+                    openMapsUrl(getGoogleRouteUrl(stops));
                 },
                 { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 }
             );
@@ -1875,6 +2194,10 @@
 
         document.addEventListener('DOMContentLoaded', function () {
             searchInput.addEventListener('input', applyFilterAndSort);
+            dateFilter.addEventListener('change', function () {
+                applyFilterAndSort();
+                renderPlan();
+            });
             sortSelect.addEventListener('change', applyFilterAndSort);
             document.getElementById('btnUseLocation').addEventListener('click', useMyLocation);
             document.getElementById('btnUseLocationMap').addEventListener('click', useMyLocation);
@@ -1882,14 +2205,20 @@
             closeSidebar.addEventListener('click', closeItinerarySidebar);
             sidebarOverlay.addEventListener('click', closeItinerarySidebar);
             openRouteMaps.addEventListener('click', openRouteInGoogleMaps);
+            undoPlanBtn.addEventListener('click', undoPlanChange);
             document.getElementById('shareWhatsApp').addEventListener('click', shareToWhatsApp);
             document.getElementById('shareEmail').addEventListener('click', shareToEmail);
             document.getElementById('copyText').addEventListener('click', copyPlanText);
+            document.getElementById('shareItineraryWhatsApp').addEventListener('click', shareItineraryToWhatsApp);
+            document.getElementById('shareItineraryEmail').addEventListener('click', shareItineraryToEmail);
+            document.getElementById('copyItinerary').addEventListener('click', copyItineraryText);
             document.getElementById('clearPlan').addEventListener('click', clearPlan);
             document.addEventListener('keydown', function (e) {
                 if (e.key === 'Escape') closeItinerarySidebar();
             });
 
+            populateDateFilter();
+            loadSavedPlan();
             renderPlan();
             applyFilterAndSort();
             initializeMap();
