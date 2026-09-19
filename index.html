@@ -125,6 +125,99 @@
             margin: 2rem 0;
         }
 
+        .page-jump {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem 0.85rem;
+            margin-top: 1.25rem;
+        }
+
+        .page-jump a {
+            color: var(--white);
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 2px solid var(--gold);
+            padding-bottom: 0.1rem;
+        }
+
+        .page-jump a:hover {
+            color: var(--gold);
+        }
+
+        .workbook-section {
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: var(--shadow-soft);
+            padding: 2rem 1.5rem 1.75rem;
+            margin-bottom: 2rem;
+        }
+
+        .workbook-kicker {
+            color: var(--primary-red);
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            font-size: 0.78rem;
+            margin-bottom: 0.35rem;
+        }
+
+        .countdown-pill {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-red), var(--dark-red));
+            color: var(--white);
+            border-radius: 999px;
+            padding: 0.55rem 1.1rem;
+            font-weight: 700;
+            margin: 0.75rem 0 1.25rem;
+        }
+
+        .tithi-table {
+            margin-bottom: 0;
+        }
+
+        .tithi-table th {
+            background: var(--primary-red);
+            color: var(--white);
+            border: none;
+            font-weight: 600;
+        }
+
+        .tithi-table td {
+            border-color: var(--light-red);
+            vertical-align: top;
+        }
+
+        .playbook-day {
+            border: 2px solid var(--light-red);
+            border-radius: 12px;
+            padding: 1rem 1.1rem;
+            margin-bottom: 0.85rem;
+            background: linear-gradient(180deg, #fff 0%, var(--light-red) 160%);
+        }
+
+        .playbook-day h3 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary-red);
+            font-size: 1.15rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .playbook-day .tithi-date {
+            font-weight: 700;
+            font-size: 0.9rem;
+            margin-bottom: 0.45rem;
+        }
+
+        .tithi-table tr.gta-weekend td {
+            background: #fff8f0;
+        }
+
+        .playbook-day.gta-weekend {
+            border-color: var(--gold);
+            background: linear-gradient(180deg, #fff 0%, #fff4e6 160%);
+        }
+
         .intro-section h2,
         .section-heading {
             color: var(--primary-red);
@@ -626,6 +719,11 @@
                 <div class="col-md-8 text-center">
                     <h1><i class="fas fa-om" aria-hidden="true"></i> Durga Puja 2026 Guide</h1>
                     <p class="subtitle">Discover and plan your Durga Puja celebrations across the Greater Toronto Area</p>
+                    <nav class="page-jump" aria-label="Page sections">
+                        <a href="#panjika">2026 dates</a>
+                        <a href="#pujaDirectory">Directory</a>
+                        <a href="#pujaMap">Map</a>
+                    </nav>
                 </div>
                 <div class="col-md-2 text-center d-none d-md-block">
                     <div class="header-decoration">
@@ -660,7 +758,124 @@
             </div>
         </section>
 
-        <section class="search-section">
+        <section class="workbook-section" id="panjika" aria-labelledby="panjikaHeading">
+            <p class="workbook-kicker">পঞ্জিকা · the 2026 tithi calendar</p>
+            <h2 class="section-heading" id="panjikaHeading">Durga Puja 2026 dates</h2>
+            <p class="mb-2">
+                Keep this open while you plan. The days below are the Bengali tithi week for 2026,
+                plus the GTA halls that celebrate on the weekends around it.
+                Every association on this page is part of the season — use
+                <strong>Show pujas on</strong> for the day you can actually go.
+            </p>
+            <p id="pujaCountdown" class="countdown-pill mb-3" role="status">Counting down to Shashthi…</p>
+
+            <div class="table-responsive mb-3">
+                <table class="table tithi-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Day</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">In the GTA</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mahalaya · মহালয়া</td>
+                            <td>Sat 10 Oct</td>
+                            <td>Many homes play Mahishasura Mardini at dawn. Most GTA halls are not open yet.</td>
+                        </tr>
+                        <tr>
+                            <td>Shashthi · ষষ্ঠী</td>
+                            <td>Fri 16 Oct</td>
+                            <td>Bodhan — the first official puja day. Filter the directory for 16 Oct.</td>
+                        </tr>
+                        <tr>
+                            <td>Saptami · সপ্তমী</td>
+                            <td>Sat 17 &amp; Sun 18 Oct</td>
+                            <td>Two calendar days this year. A good weekend for a same-day itinerary.</td>
+                        </tr>
+                        <tr>
+                            <td>Ashtami · অষ্টমী</td>
+                            <td>Mon 19 Oct</td>
+                            <td>Peak tithi — Pushpanjali and Sandhi Puja. Confirm times with the hall you visit.</td>
+                        </tr>
+                        <tr>
+                            <td>Navami · নবমী</td>
+                            <td>Tue 20 Oct</td>
+                            <td>Last full tithi night. Several GTA pujas still run through this date.</td>
+                        </tr>
+                        <tr>
+                            <td>Dashami · দশমী</td>
+                            <td>Wed 21 Oct</td>
+                            <td>Sindoor Khela and visarjan where a hall observes it. The tithi week closes — GTA pujas continue below.</td>
+                        </tr>
+                        <tr class="gta-weekend">
+                            <td>Weekend after · পরের সপ্তাহ</td>
+                            <td>Fri 23 – Sun 25 Oct</td>
+                            <td>Same Puja, next available hall dates. These associations belong here too — filter 23–25 Oct.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="small text-muted mb-4">
+                <strong>Tithi week is 16–21 Oct.</strong> Saptami covers two sunrises, so Saturday and Sunday both count.
+                Sandhi Puja is the ~48 minutes when Ashtami becomes Navami — ask that hall’s committee for the minutes.
+                In the GTA, venue calendars often land on the weekend after Dashami. That is still Durga Puja, not a leftover.
+            </p>
+
+            <h3 class="h5 section-heading mb-3">Day-by-day in the GTA</h3>
+            <article class="playbook-day">
+                <h3>Mahalaya</h3>
+                <p class="tithi-date">Saturday 10 October</p>
+                <p class="mb-2">Listen once if you can. Then skim the directory for early-weekend pujas (some GTA groups host 10–11 Oct).</p>
+                <button type="button" class="btn btn-sm btn-festive" data-jump-day="2026-10-10">Show pujas on 10 Oct</button>
+            </article>
+            <article class="playbook-day">
+                <h3>Shashthi</h3>
+                <p class="tithi-date">Friday 16 October</p>
+                <p class="mb-2">Add Friday halls to My Puja Plan. One day = an itinerary and a Google Maps route from where you are.</p>
+                <button type="button" class="btn btn-sm btn-festive" data-jump-day="2026-10-16">Show pujas on 16 Oct</button>
+            </article>
+            <article class="playbook-day">
+                <h3>Saptami</h3>
+                <p class="tithi-date">Saturday 17 &amp; Sunday 18 October</p>
+                <p class="mb-2">The busiest GTA weekend. Pick <em>one</em> day, add two or three nearby halls, then Open route. Mixing Saturday and Sunday is a list, not one outing.</p>
+                <button type="button" class="btn btn-sm btn-festive me-2" data-jump-day="2026-10-17">17 Oct</button>
+                <button type="button" class="btn btn-sm btn-festive" data-jump-day="2026-10-18">18 Oct</button>
+            </article>
+            <article class="playbook-day">
+                <h3>Ashtami</h3>
+                <p class="tithi-date">Monday 19 October</p>
+                <p class="mb-2">Go early for anjali if the hall offers it. Sandhi is in the morning this year on the tithi clock — get the exact window from that puja’s committee.</p>
+                <button type="button" class="btn btn-sm btn-festive" data-jump-day="2026-10-19">Show pujas on 19 Oct</button>
+            </article>
+            <article class="playbook-day">
+                <h3>Navami</h3>
+                <p class="tithi-date">Tuesday 20 October</p>
+                <p class="mb-2">Last full tithi for many temples. Finish the weekday halls you skipped on the weekend.</p>
+                <button type="button" class="btn btn-sm btn-festive" data-jump-day="2026-10-20">Show pujas on 20 Oct</button>
+            </article>
+            <article class="playbook-day">
+                <h3>Dashami</h3>
+                <p class="tithi-date">Wednesday 21 October</p>
+                <p class="mb-2">Fewer weekday bookings on a Wednesday. If a hall lists Dashami, it is often visarjan or a short closing — then keep going: the next weekend is still Puja.</p>
+                <button type="button" class="btn btn-sm btn-festive" data-jump-day="2026-10-21">Show pujas on 21 Oct</button>
+            </article>
+            <article class="playbook-day gta-weekend">
+                <h3>The weekend after</h3>
+                <p class="tithi-date">Friday 23 – Sunday 25 October</p>
+                <p class="mb-2">
+                    Halls book months ahead, and a Wednesday Dashami is hard for working families.
+                    Amantran, Royal City, Tookhar, Utsav London, Niagara Sharodiya, Simcoe Utsav, Mrittika — and anyone else on 23–25 Oct — are on this map for the same reason as the tithi-week halls.
+                    Pick one day, add them to My Puja Plan, and open the route.
+                </p>
+                <button type="button" class="btn btn-sm btn-festive me-2" data-jump-day="2026-10-23">23 Oct</button>
+                <button type="button" class="btn btn-sm btn-festive me-2" data-jump-day="2026-10-24">24 Oct</button>
+                <button type="button" class="btn btn-sm btn-festive" data-jump-day="2026-10-25">25 Oct</button>
+            </article>
+        </section>
+
+        <section class="search-section" id="pujaDirectory">
             <div class="row g-3 align-items-end">
                 <div class="col-12 col-lg-4">
                     <label for="searchInput" class="form-label fw-semibold mb-1">Search</label>
@@ -1319,6 +1534,44 @@
                 }).join('');
             if (current && Array.prototype.some.call(dateFilter.options, (opt) => opt.value === current)) {
                 dateFilter.value = current;
+            }
+        }
+
+        function jumpToDirectoryDay(dayKey) {
+            if (!dayKey) return;
+            if (!Array.prototype.some.call(dateFilter.options, function (opt) { return opt.value === dayKey; })) {
+                const opt = document.createElement('option');
+                opt.value = dayKey;
+                opt.textContent = formatDayLabel(dayKey);
+                dateFilter.appendChild(opt);
+            }
+            dateFilter.value = dayKey;
+            applyFilterAndSort();
+            renderPlan();
+            const directory = document.getElementById('pujaDirectory');
+            if (directory) directory.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        function updatePujaCountdown() {
+            const el = document.getElementById('pujaCountdown');
+            if (!el) return;
+            const start = new Date(PUJA_YEAR, 9, 16);
+            start.setHours(0, 0, 0, 0);
+            const now = new Date();
+            now.setHours(0, 0, 0, 0);
+            const diffDays = Math.round((start.getTime() - now.getTime()) / 86400000);
+            if (diffDays > 1) {
+                el.textContent = diffDays + ' days to Shashthi · Friday 16 October';
+            } else if (diffDays === 1) {
+                el.textContent = 'Tomorrow is Shashthi · Friday 16 October';
+            } else if (diffDays === 0) {
+                el.textContent = 'Shashthi is today · filter the directory and go';
+            } else if (diffDays >= -5) {
+                el.textContent = 'Puja week is on · 16–21 October';
+            } else if (diffDays >= -9) {
+                el.textContent = 'The weekend-after pujas are on · 23–25 October';
+            } else {
+                el.textContent = 'Shashthi 16 Oct → Dashami 21 Oct · weekend after 23–25 Oct';
             }
         }
 
@@ -2203,6 +2456,12 @@
                 if (e.key === 'Escape') closeItinerarySidebar();
             });
 
+            document.querySelectorAll('[data-jump-day]').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    jumpToDirectoryDay(btn.getAttribute('data-jump-day'));
+                });
+            });
+            updatePujaCountdown();
             populateDateFilter();
             loadSavedPlan();
             renderPlan();
